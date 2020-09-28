@@ -21,16 +21,16 @@ A mano es facil alineas dos secuencias, pero cuando se agregan mas se vuelve mas
 ### - ¿Son parecidos los citocromos c de humano y gallo?
 Es su mayoria son parecidos. Usando Clustal Omega podemos ver las diferencias.
 
-Humano  NP_061820.1 
-Gallo   NP_001072946.1 
+Humano  NP_061820.1  
+Gallo   NP_001072946.1   
 
-NP_061820.1         MGDVEKGKKIFIMKCSQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIW	60
-NP_001072946.1      MGDIEKGKKIFVQKCSQCHTVEKGGKHKTGPNLHGLFGRKTGQAEGFSYTDANKNKGITW	60
-                    ***:*******: ******************************* *:*** ******* *
+NP_061820.1         MGDVEKGKKIFIMKCSQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIW	60  
+NP_001072946.1      MGDIEKGKKIFVQKCSQCHTVEKGGKHKTGPNLHGLFGRKTGQAEGFSYTDANKNKGITW	60  
+                    ***:*******: ******************************* *:*** ******* *  
 
-NP_061820.1         GEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE	105
-NP_001072946.1      GEDTLMEYLENPKKYIPGTKMIFAGIKKKSERVDLIAYLKDATSK	105
-                    ***********************.*****.**.*******.**.:
+NP_061820.1         GEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE	105  
+NP_001072946.1      GEDTLMEYLENPKKYIPGTKMIFAGIKKKSERVDLIAYLKDATSK	105  
+                    ***********************.*****.**.*******.**.:  
 
 Los asteriscos ( * ), indican las coincidencias entre las dos secuencias. Teien un 89% de concidencias. 12 sobre 105.
 
@@ -52,12 +52,12 @@ El “:” implica que el residuo analizado en esa posición tiene una conservac
 A simple vista y ayudado por la herramienta se puede ver una gran similitud entre las secuencias de los organismos.
 
 ### - ¿Creeríamos que todos los organismos se asemejan por igual al resto, o se pueden identificar grupos de mayor similitud? Si es así, ¿tienen sentido?
-Si se pueden identificar grupos de mayor similitud entre organismos. 
+
 
 ### - ¿Qué evidencias nos aportaría este análisis, a la luz de la evolución?
 
 ### - A juzgar por los organismos participantes, ¿cuáles creería que deberían estar más agrupados en el árbol filogenético?
-A juzgar por los organismos, esperariamos que l humano el gorila y el chimpance esten agrupados dentro del arbol.
+A juzgar por los organismos, esperariamos que el humano e l gorila y el chimpance esten agrupados dentro del arbol.
 Luego de la puesta en comun en clase, vimos que los oviparos fueron agrupados en una de las ramas del arbol mientras que el chimpance gorila y el humano fueron agrupados en otra de las ramas.
 
 ### - Observemos el árbol filogenético. ¿Concuerda con lo esperado? ¿De qué organismos son los citocromos c más parecidos? ¿Cómo se explica?
