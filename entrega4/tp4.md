@@ -1,50 +1,66 @@
-# bio-informatica-2020-2c
-Repo para la materia de Introducción a la Bioinformática de la UNQ
+## Trabajo práctico 4
+## ¿En qué se parecen una gallina y una mosca?
 
-## Trabajo práctico 2. 
+### - Trabajaremos con las secuencias del citocromo c de nueve organismos, listados en la tabla de abajo. Además de su denominación taxonómica, deberíamos conocer su nombre común: intentemos completar la tabla.
 
-### - ¿Por qué una célula querría destruir sus propias proteínas?
+| Secuencia      | Nombre Taxonimico       | Nombre Comun            |
+|----------------|-------------------------|-------------------------|
+| NP_061820.1    | Homo sapiens            | Humano                  |  
+| NP_001072946.1 | Gallus gallus           | Gallo                   |   
+| NP_001065289.1 | Pan troglodytes         | Chimpance               |  
+| NP_001157486.1 | Equus caballus          | Caballo                 |
+| NP_001183974.1 | Canis lupus familiaris  | Perro                   |
+| AEP27192.1     | Gorilla gorilla         | Gorila occidental       |
+| XP_024245566.1 | Oncorhynchus tshawytscha| Salmón chinook          |
+| NP_001086101.1 | Xenopus laevis          | Rana de garras africana |
+| NP_477164.1    | Drosophila melanogaster | Mosca de fruta          |
 
-Primero, que es la ubiquitina y que hace? La ubiquitina es una pequeña proteína que se encuentra en todo el organismo y está formada por 76 aminoácidos. Cuando varias moléculas de ubiquitina en una conformación determinada se unen a la proteína que tiene que ser eliminada, el proteasoma -gran complejo multiproteico responsable de la degradación-, la identifica como “desechable” e inicia una cadena de reacciones que terminan con la destrucción de la misma.
+### - ¿Cuán sencillo será alinear dos o más secuencias a mano? ¿Cuánto influirán el número de secuencias a alinear, su longitud, y la similitud entre ellas?
+A mano es facil alineas dos secuencias, pero cuando se agregan mas se vuelve mas complejo. Además la alineación a mano puede traer errores involuntarios. Es preferible el uso de una herramienta programada y probada para estos análisis.
 
-Ahora, porque querría un célula destruir proteínas, en primer lugar el exceso de proteínas y organelas puede tener un fuerte impacto en la capacidad proliferativa de las célucas y esto está asociado comunmente al desarrollo de una amplia variedad de patologas, entre ellos cancer o distintas enfermedades neurodegenerativas.
+### - ¿Son parecidos los citocromos c de humano y gallo?
+Es su mayoria son parecidos. Usando Clustal Omega podemos ver las diferencias.
 
-https://www.conicet.gov.ar/ubiquitina-la-importancia-de-las-pequenas-cosas/ Leyendo esto.
+Humano  NP_061820.1 
+Gallo   NP_001072946.1 
 
-............................
+NP_061820.1         MGDVEKGKKIFIMKCSQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIW	60
+NP_001072946.1      MGDIEKGKKIFVQKCSQCHTVEKGGKHKTGPNLHGLFGRKTGQAEGFSYTDANKNKGITW	60
+                    ***:*******: ******************************* *:*** ******* *
 
-### - ¿Qué información nos provee esta página?
+NP_061820.1         GEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE	105
+NP_001072946.1      GEDTLMEYLENPKKYIPGTKMIFAGIKKKSERVDLIAYLKDATSK	105
+                    ***********************.*****.**.*******.**.:
 
-Nos provee información sobre las formas 3D de proteínas, ácidos nucleicos y conjuntos complejos que ayuda a estudiantes e investigadores a comprender todos los aspectos de la biomedicina y la agricultura, desde la sintesis de proteínas hasta la salud y enfermedad. 
+Los asteriscos ( * ), indican las coincidencias entre las dos secuencias. Teien un 89% de concidencias. 12 sobre 105.
 
-............................
-### - ¿Cómo se determinó la estructura de esta proteína?
+### - ¿Qué teorías subyacen a este análisis?
+La teoria que subyace al análisis es la Teoria de Evolución.
 
+### - ¿Cómo nos ayuda la evolución a explicar sus similitudes y diferencias?
+La teoria plantea que todos los organismos tenemos un ancestro en común. Las similitudes entre las secuencias  provienen de dicho ancestro.
 
-............................
-### - A la izquierda vemos una representación de la estructura de ubiquitina. ¿Qué significan las cintas, las flechas y las regiones angostas?
-............................
-### - ¿Representa esa imagen a la realidad del sistema biológico?
+### - Podemos elegir verlo en colores (Show Color). ¿Qué indican los colores?
+Los colores indican las propiedades físico-químicas de un sub-segmento. Cuando coinciden los colores es porque ese sub-segmento de aminoácidos tienen similitudes, aunque no coincidan exactamente los mismos aminoácidos en ese segmento.
 
-............................
-### - La estructura 1UBQ fue “refinada a una resolución de 1.8 Angstroms”. Éste es el error asociado al experimento: mientras mayor es la resolución, menor es la certeza al determinar la posición de cada átomo.
+### - ¿Qué indican el guión (-), los dos puntos (:) y el asterisco ( * ) ?
+El “-” significa un GAP, que es un corrimiento de la cadena que puede ser por una deleción o una adición. 
+El “ * ” implica que el residuo analizado se conserva en la posición analizada. 
+El “:” implica que el residuo analizado en esa posición tiene una conservación fuerte. El “.” es una conservación débil
 
-............................
-### ¿Cuál es la utilidad y los condicionamientos de usar un modelo científico que sabemos inexacto?
+### - A simple vista, ¿se conserva la secuencia del citocromo c en los organismos?
+A simple vista y ayudado por la herramienta se puede ver una gran similitud entre las secuencias de los organismos.
 
+### - ¿Creeríamos que todos los organismos se asemejan por igual al resto, o se pueden identificar grupos de mayor similitud? Si es así, ¿tienen sentido?
+Si se pueden identificar grupos de mayor similitud entre organismos. 
 
-### - ¿Qué información esperaría encontrar como resultado un experimento destinado a determinar la estructura terciaria de una molécula biológica?
+### - ¿Qué evidencias nos aportaría este análisis, a la luz de la evolución?
 
-### - Podemos explorar el contenido del archivo que acabamos de descargar si lo observamos con un editor de texto. Haciendo clic con el botón derecho del mouse sobre el archivo descargado, usemos la opción Abrir con y seleccionemos el Bloc de Notas u otro editor de texto. ¿En qué consiste un archivo PDB?
+### - A juzgar por los organismos participantes, ¿cuáles creería que deberían estar más agrupados en el árbol filogenético?
+A juzgar por los organismos, esperariamos que l humano el gorila y el chimpance esten agrupados dentro del arbol.
+Luego de la puesta en comun en clase, vimos que los oviparos fueron agrupados en una de las ramas del arbol mientras que el chimpance gorila y el humano fueron agrupados en otra de las ramas.
 
-### - Desplacémonos por el archivo hasta encontrar las líneas que comienzan con la palabra ATOM. ¿Qué tipo de información brinda esta sección?
-
-### - ¿Podríamos extraer de este archivo información sobre la estructura primaria de la proteína en cuestión? ¿Cómo se presenta dicha información y qué significa la representación? Desde el punto de vista computacional:¿de qué tipo de dato se trata esta información?
-
-### - ¿Considera que el formato PDB es útil para presentar los resultados del experimento?
-
-### - Observamos que la información respeta cierta estructura interna. ¿Cuáles son los beneficios y las limitaciones de imponer una estructura para comunicar los resultados de un experimento?
-
-### - Hemos visto que las proteínas tienen estructura tridimensional y hemos podido observar algunas características de las mismas. ¿Será igual con los ácidos nucléicos?
-### Rosalind Franklin es una científica muy relevante, que tuvo menos reconocimiento del merecido. Contanos sobre los procedimientos que puso a punto Rosalind. Por supuesto, es difícil entender en qué consiste la estructura de una molécula simplemente mirando el contenido de un archivo PDB. Ya sabemos que existen formas de representar la información tridimensional en la computadora. Existen una multiplicidad de aplicaciones gratuitas que nos permita visualizar la estructura de una proteína. Te proponemos algunas aplicaciones para teléfonos celulares disponibles en las tiendas de nuestro teléfono (NDKmol - molecular viewer o RSCB PDB mobile) de sencilla instalación.
-
+### - Observemos el árbol filogenético. ¿Concuerda con lo esperado? ¿De qué organismos son los citocromos c más parecidos? ¿Cómo se explica?
+Si concuerda con lo esperado. Se explica por dos motivos. 
+El primero es que hay mas similitudes en la secuencias de un salmon y una rana, mucho mas que entre un salmon y un perro. 
+El segundo puede ser la falta de mas información para tomar decisiones mas certeras en cuanto al agrupamiento. Con la información que le brindamos a Clustal Omega,la aplicación realizó la asocianción entre organismo lo mas aproximada posible, aunque entre un gallo y un salmon no haya tanta similitud.
