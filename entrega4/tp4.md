@@ -52,9 +52,11 @@ El “:” implica que el residuo analizado en esa posición tiene una conservac
 A simple vista y ayudado por la herramienta se puede ver una gran similitud entre las secuencias de los organismos.
 
 ### - ¿Creeríamos que todos los organismos se asemejan por igual al resto, o se pueden identificar grupos de mayor similitud? Si es así, ¿tienen sentido?
-
+Segun la teoria de la evolucion todos los organismos se asemejan de cierta forma (provenimos de un mismo ancentros).
+Se pueden identificar por grupos de mayor similitud, como por ejemplo mamiferos, y debtro de los mismos grupos se encuentra mayor similitud en las proteinas que en el resto de los otros grupos.
 
 ### - ¿Qué evidencias nos aportaría este análisis, a la luz de la evolución?
+Este analisis deja en evidencia que cuanto mayor similitud tenga una especie con otra tendran mayor similitud en cuanto a sus proteinas y ARN nucloitido. 
 
 ### - A juzgar por los organismos participantes, ¿cuáles creería que deberían estar más agrupados en el árbol filogenético?
 A juzgar por los organismos, esperariamos que el humano e l gorila y el chimpance esten agrupados dentro del arbol.
