@@ -84,8 +84,6 @@ Los programas derivdos de BLAST que podemos ver son:
 *VVGGLGGYMLGSAMSRPIIHFGSDYEDRYYRENMHRYPNQVYYRPMDEYSNQNNFVHDCVNITIKQHTVTTTTKGENFTETDVKMMERVVEQMCITQYERESQAYYQRGSSMVLFSSPPVILLISFLIFLIVG*
 
 DB: Protein Data Bank (PDB)
-Filtros utilizados  
-![](filtros.png)
 
 E_value: **9e-82**
 
@@ -93,7 +91,8 @@ E_value: **9e-82**
 |:-------------------------------------------:|:---------:|:-----------:|:-----------:|:-------:|:----------:|:---------:|
 | Chain A, Major prion protein [Homo sapiens] |    239    |     239     |     83%     |  9e-82  |   100.00%  | 6LNI_A    |
 
-
+Filtros utilizados  
+![](filtros.png)
 ![](graphic_summary.png)
 
 E value:  
@@ -109,7 +108,8 @@ El Score es un porcentaje que se obtiene analizando el resto de los resultados y
 ### - RETO VIII: Realizá nuevas búsquedas usando la mitad de la secuencia problema y para un cuarto de la secuencia original. Compará los gráficos obtenidos.¿Qué conclusiones puede sacas?
 
 - 50 %  
-*VVGGLGGYMLGSAMSRPIIHFGSDYEDRYYRENMHRYPNQVYYRPMDEYSNQNNFVHDCVNITIKQH*
+*>sub_sequencia  
+VVGGLGGYMLGSAMSRPIIHFGSDYEDRYYRENMHRYPNQVYYRPMDEYSNQNNFVHDCVNITIKQH*
 
 E_value: **4e-47**
 
@@ -120,7 +120,8 @@ E_value: **4e-47**
 ![](graphic_summary_50porciento_cadena.png)
 
 - 25%  
-*VVGGLGGYMLGSAMSRPIIHFGSDYEDRYYREN*
+*>sub_sequencia  
+VVGGLGGYMLGSAMSRPIIHFGSDYEDRYYREN*
 
 E_value: **1e-18**
 
@@ -146,13 +147,12 @@ E_value: **0.0**
 |:--------------------------------------------------------------------------:|:---------:|:-----------:|:-----------:|:-------:|:----------:|:---------:|
 | Chain A, UDP N-ACETYLGLUCOSAMINE O-ACYLTRANSFERASE [Escherichia coli K-12] |    533   |     533    |     100%    |  0.0  |   100.00%  | 1LXA_A    |
 
-Hits y subject sequences:  
-Distribution of the top 185 Blast Hits on 165 subject sequences
+*Hits y subject sequences:  
+Distribution of the top 185 Blast Hits on 165 subject sequences*
 
 ### - RETO X: Realizá una nueva corrida del BLASTp, utilizando la misma secuencia , pero ahora contra la base de datos PDB. ¿Se obtienen los mismo resultados? ¿Qué tipo de resultados(hits) se recuperan? ¿Cuándo nos podría ser útil este modo de corrida?
 Dado que en ejercicios anteriores ya estabamos utulizando l base de datos PDB. Haremos esta prueba utilizando **UniProtKB**
 
-Obtuvimos: 
 
 E_value: **0.0**
 
@@ -160,15 +160,12 @@ E_value: **0.0**
 |:--------------------------------------------------------------------------:|:---------:|:-----------:|:-----------:|:-------:|:----------:|:---------:|
 | RecName: Full=Acyl-[acyl-carrier-protein]--UDP-N-acetylglucosamine O-acyltransferase; Short=UDP-N-acetylglucosamine acyltransferase [Escherichia coli APEC O1]     |    533   |     533    |     100%    |  0.0  |   100.00%  |A1A7M5.1   |
 
-Hits y subject sequences:  
-Distribution of the top 1186 Blast Hits on 1043 subject sequences
+*Hits y subject sequences:  
+Distribution of the top 1186 Blast Hits on 1043 subject sequences*
 
 
 Comparando los resultados de los procesos en ditintas db lo que podemos observar es que en PDB obtenemos menos hits y secuancias que en UniProtKB.  
 Es util utilizar PDB para buscar secuancias similares cuando nos interesa conocer similitudes estructurales, puesto de PDB es una base de datos de protenias que almancena informacion de la estructura tridimensional de las proteínas y ácidos nucleicos. 
-
-
-
 
 
 
