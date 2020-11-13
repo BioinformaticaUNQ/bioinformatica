@@ -1,11 +1,17 @@
 import './App.css';
 import React from "react";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import Homepage from "./pages/homepage/Homepage";
 
 function App() {
   return (
-    <div className="App">
-        holi
-    </div>
+      <BrowserRouter>
+          <Switch>
+              <Route exact
+                     path="/"
+                     render={() => <Homepage/>}></Route>
+          </Switch>
+      </BrowserRouter>
   );
 }
 
