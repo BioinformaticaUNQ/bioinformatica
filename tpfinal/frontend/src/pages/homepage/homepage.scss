@@ -11,5 +11,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    .label-codigo {
+      margin-bottom: 5px;
+    }
   }
 }

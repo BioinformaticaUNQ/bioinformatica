@@ -21,7 +21,7 @@ class Homepage extends React.Component {
 
                 </div>
                 <div className='codigo-pdb'>
-                    <label>
+                    <label className='label-codigo'>
                         Inserte su código PDB
                     </label>
                     <input type="text" value={this.state.codigoPDB} id="codigo" name="codigo"
