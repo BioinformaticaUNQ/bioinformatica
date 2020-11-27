@@ -1,9 +1,6 @@
-from functools import lru_cache
-
 from Bio.Blast import NCBIWWW, NCBIXML
 
 
-@lru_cache
 def blast_records(sequence):
     blast_result = NCBIWWW.qblast(
         "blastp",
