@@ -1,40 +1,43 @@
 # coding=utf-8
 from flask import Flask, request
-from flask_cors import CORS, cross_origin
+
+from src.backend.service.clustal_service import ClustalService
 from src.backend.validators.pdbValidators import PdbValidators
 from src.backend.sequence.utils import get_sequence_from
 from src.backend.sequence.blastUtils import blast_records
 
 
 app = Flask(__name__)
-CORS(app, suppport_credentials=True)
+
 
 
 @app.route('/pdbCode', methods=['POST'])
-@cross_origin(support_credentials=True)
+
 def pdb_code():
     pdb_code = request.json['pdbcode']
     return PdbValidators.validate_pdb_code(pdb_code)
 
 
 @app.route('/sequence', methods=['POST'])
-@cross_origin(support_credentials=True)
-def sequence():
-    pdb_code = request.json['pdbcode']
 
+def sequence():
+    pdb_code = request.form['pdbcode']
     return get_sequence_from(pdb_code) if PdbValidators.validate_pdb_code(pdb_code) else ''
 
 
 @app.route('/homologousSequence', methods=['POST'])
-@cross_origin(support_credentials=True)
+
 def homologous_sequences():
+    print('Entered')
     sequences = homologous_sequences_details()
     result = [{'title': seq.get('title'), 'sequence': seq.get('sequence')} for seq in sequences.get('d')]
     return {'d': result}
 
 
+
+
 @app.route('/homologousSequenceDetails', methods=['POST'])
-@cross_origin(support_credentials=True)
+
 def homologous_sequences_details():
     main_sequence = sequence()
     print(main_sequence)
@@ -56,7 +59,19 @@ def homologous_sequences_details():
             'aligmened_sequence': aligmened_sequence
         })
 
-    return {'d': results}
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    sequences = homologous_sequences_details()
+    result = [{'title': seq.get('title'), 'sequence': seq.get('sequence')} for seq in sequences.get('d')]
+    c_s = ClustalService()
+    c_s.dump_to_fasta_file(result)
+
+
+@app.route('/pepe', methods=['GET'])
+def pepe():
+    return 'Pepe'
+
+
 
 
 if __name__ == '__main__':
