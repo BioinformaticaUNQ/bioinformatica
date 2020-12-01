@@ -33,9 +33,6 @@ def homologous_sequences():
     result = [{'title': seq.get('title'), 'sequence': seq.get('sequence')} for seq in sequences.get('d')]
     return {'d': result}
 
-
-
-
 @app.route('/homologousSequenceDetails', methods=['POST'])
 
 def homologous_sequences_details():
@@ -59,12 +56,15 @@ def homologous_sequences_details():
             'aligmened_sequence': aligmened_sequence
         })
 
+    return results
+
 @app.route('/analyze', methods=['POST'])
 def analyze():
     sequences = homologous_sequences_details()
-    result = [{'title': seq.get('title'), 'sequence': seq.get('sequence')} for seq in sequences.get('d')]
+
+    result = [{'title': seq.get('title'), 'sequence': seq.get('sequence')} for seq in sequences]
     c_s = ClustalService()
-    c_s.dump_to_fasta_file(result)
+    c_s.get_alignment_from(result)
 
 
 @app.route('/pepe', methods=['GET'])
