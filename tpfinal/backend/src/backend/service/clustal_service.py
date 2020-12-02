@@ -3,7 +3,7 @@ from Bio.Align.Applications import ClustalwCommandline
 from Bio import AlignIO
 from Bio.Align import MultipleSeqAlignment
 from Bio.SeqRecord import SeqRecord
-from constants.constants import clustalw
+from src.backend.constants.constants import clustalw
 
 
 class ClustalService:
@@ -27,7 +27,6 @@ class ClustalService:
         clustalw_cline = ClustalwCommandline(clustalw, infile=self._file('fasta'))
         #assert os.path.isfile(clustalw), "Clustal W executable missing"
         stdout, stderr = clustalw_cline()
-
 
     def _get_alignment(self):
         return AlignIO.read(self._file('aln'), "clustal")
