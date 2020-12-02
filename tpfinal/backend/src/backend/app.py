@@ -64,14 +64,12 @@ def analyze():
 
     result = [{'title': seq.get('title'), 'sequence': seq.get('sequence')} for seq in sequences]
     c_s = ClustalService()
-    c_s.get_alignment_from(result)
+    return {'d': c_s.get_alignment_from(result)}
 
 
 @app.route('/pepe', methods=['GET'])
 def pepe():
     return 'Pepe'
-
-
 
 
 if __name__ == '__main__':
