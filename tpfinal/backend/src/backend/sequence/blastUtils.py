@@ -1,23 +1,39 @@
 from Bio.Blast import NCBIWWW, NCBIXML
 import os
+from pprint import pprint as pp
 
-def blast_records(sequence):
-    blast_result = NCBIWWW.qblast(program="blastp",
-                                  database="pdb",
-                                  sequence=sequence,
-                                  expect=0.01)
 
-    return NCBIXML.read(blast_result)
+def blast_records(id):
 
-def copy_blast_records():
-    fasta = 'C:/Users/tumba/OneDrive/Desktop/bioinformatica/tpfinal/backend/src/backend/fasta/1MCY.fasta'
-    out_put = 'C:/Users/tumba/OneDrive/Desktop/bioinformatica/tpfinal/backend/src/backend/blast/output.fa'
-    db = 'C:/Program Files/NCBI/blast-2.11.0+/db/pdbaa'
+    # Primero descubrimos cual es el current working directory
+    cwd = os.getcwd()
 
-    query = "blastp -query {} -out {} -db {}".format(
+    # Buscamos donde esta el fasta de la proteina
+    fasta_dir = os.path.join(cwd, "fasta")
+    fasta = os.path.join(fasta_dir, id+".fasta")
+
+    # Creamos un outfile para ese fasta
+    blast_dir = os.path.join(cwd, "blast")
+    blast_output = os.path.join(blast_dir, id+"_output.fa")
+    with open(blast_output, 'w') as output:
+        pass
+
+    # Tenemos "hardcodeado" la base de datos en el proyecto
+    db_path = os.path.join(cwd, "db")
+    db = os.path.join(db_path, "pdbaa")
+
+    # Hacemos la query a blasta de forma local
+    query = "blastp -query {} -out {} -db {}  -evalue {} -outfmt 5".format(
         fasta,
-        out_put,
-        db
+        blast_output,
+        db,
+        0.001
     )
-    print(s)
-    os.system(s)
+
+    os.system(query)
+
+    # Retornamos lo devuelto por blast
+    with open(blast_output, 'r') as file:
+        content = file.read()
+
+    return content

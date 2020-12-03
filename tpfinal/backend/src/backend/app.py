@@ -4,7 +4,7 @@ from flask import Flask, request
 from src.backend.service.clustal_service import ClustalService
 from src.backend.validators.pdbValidators import PdbValidators
 from src.backend.sequence.utils import get_sequence_from
-from src.backend.sequence.blastUtils import blast_records, copy_blast_records
+from src.backend.sequence.blastUtils import blast_records
 from pprint import pprint as pp
 import os
 
@@ -37,11 +37,14 @@ def homologous_sequences():
 
 @app.route('/homologousSequenceDetails', methods=['POST'])
 def homologous_sequences_details():
-    main_sequence = sequence()
-    print(main_sequence)
+    pdb_code = request.json['pdbcode']
 
-    records = blast_records(main_sequence)
+    get_sequence_from(pdb_code)
 
+    records = blast_records(pdb_code)
+
+
+    """ 
     results = []
     for alignment in records.alignments:
         aligmened_sequence = ''
@@ -55,9 +58,9 @@ def homologous_sequences_details():
             'sequence' : aligmened_sequence.replace('-', ''),
             'aligmened_matches': aligmened_matches,
             'aligmened_sequence': aligmened_sequence
-        })
+        })"""
 
-    return results
+    return records
 
 
 @app.route('/analyze', methods=['POST'])
@@ -68,11 +71,6 @@ def analyze():
     c_s = ClustalService()
     c_s.get_alignment_from(result)
 
-
-@app.route('/pepe', methods=['GET'])
-def pepe():
-    copy_blast_records()
-    return {'a': True}
 
 
 if __name__ == '__main__':
