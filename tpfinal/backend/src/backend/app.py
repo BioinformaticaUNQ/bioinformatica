@@ -6,6 +6,7 @@ from src.backend.validators.pdbValidators import PdbValidators
 from src.backend.sequence.utils import get_sequence_from
 from src.backend.sequence.blastUtils import blast_records
 from pprint import pprint as pp
+import json
 import os
 
 app = Flask(__name__)
@@ -43,24 +44,23 @@ def homologous_sequences_details():
 
     records = blast_records(pdb_code)
 
-
-    """ 
     results = []
-    for alignment in records.alignments:
-        aligmened_sequence = ''
-        aligmened_matches = ''
-        for hsp in alignment.hsps:
-            aligmened_sequence = aligmened_sequence + hsp.sbjct
-            aligmened_matches = aligmened_matches + hsp.match
+    for record in records:
+        for alignment in record.alignments:
+            aligmened_sequence = ''
+            aligmened_matches = ''
+            for hsp in alignment.hsps:
+                aligmened_sequence = aligmened_sequence + hsp.sbjct
+                aligmened_matches = aligmened_matches + hsp.match
 
-        results.append({
-            'title': alignment.title.split('>')[0],
-            'sequence' : aligmened_sequence.replace('-', ''),
-            'aligmened_matches': aligmened_matches,
-            'aligmened_sequence': aligmened_sequence
-        })"""
+            results.append({
+                'title': alignment.title.split('>')[0],
+                'sequence' : aligmened_sequence.replace('-', ''),
+                'aligmened_matches': aligmened_matches,
+                'aligmened_sequence': aligmened_sequence
+            })
 
-    return records
+    return json.dumps(results)
 
 
 @app.route('/analyze', methods=['POST'])

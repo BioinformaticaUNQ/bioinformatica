@@ -1,6 +1,6 @@
 from Bio.Blast import NCBIWWW, NCBIXML
 import os
-from pprint import pprint as pp
+from io import StringIO
 
 
 def blast_records(id):
@@ -33,7 +33,5 @@ def blast_records(id):
     os.system(query)
 
     # Retornamos lo devuelto por blast
-    with open(blast_output, 'r') as file:
-        content = file.read()
+    return NCBIXML.parse(open(blast_output))
 
-    return content
