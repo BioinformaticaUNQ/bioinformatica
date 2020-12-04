@@ -1,10 +1,11 @@
 import './App.css';
 import React from "react";
+import {Homepage} from "./components/homepage/Homepage";
 
 function App() {
   return (
     <div className="App">
-        holi
+        <Homepage/>
     </div>
   );
 }
