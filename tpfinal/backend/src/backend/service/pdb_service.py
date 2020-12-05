@@ -49,5 +49,4 @@ class PDBService:
         # Guardo archivo fasta en fasta folder
         save_fasta_file(pdb_code, fasta_content)
 
-        # Retorno la primer secuencia
-        return fasta_content.split('\n')[1]
+        return fasta_content.split("\n")

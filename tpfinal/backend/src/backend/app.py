@@ -3,13 +3,24 @@ from flask import Flask, request
 
 from src.backend.service.clustal_service import ClustalService
 from src.backend.service.blast_service import BlastService
+from src.backend.service.pdb_service import PDBService
 import json
 
 
 app = Flask(__name__)
 
+pdb_service = PDBService()
 blast_service = BlastService()
 clustal_service = ClustalService()
+
+
+@app.route('/sequences', methods=['POST'])
+def getSequences():
+    pdb_code = request.json['pdbcode']
+
+    result = pdb_service.get_sequence_from(pdb_code)
+
+    return json.dumps(result)
 
 
 @app.route('/homologousSequence', methods=['POST'])
