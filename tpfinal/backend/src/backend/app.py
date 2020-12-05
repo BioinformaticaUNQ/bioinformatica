@@ -1,62 +1,43 @@
 # coding=utf-8
 from flask import Flask, request
-from flask_cors import CORS, cross_origin
-from src.backend.validators.pdbValidators import PdbValidators
-from src.backend.sequence.utils import get_sequence_from
-from src.backend.sequence.blastUtils import blast_records
+
+from src.backend.service.clustal_service import ClustalService
+from src.backend.service.blast_service import BlastService
+from src.backend.service.pdb_service import PDBService
+import json
 
 
 app = Flask(__name__)
-CORS(app, suppport_credentials=True)
+
+pdb_service = PDBService()
+blast_service = BlastService()
+clustal_service = ClustalService()
 
 
-@app.route('/pdbCode', methods=['POST'])
-@cross_origin(support_credentials=True)
-def pdb_code():
-    pdb_code = request.json['pdbcode']
-    return PdbValidators.validate_pdb_code(pdb_code)
-
-
-@app.route('/sequence', methods=['POST'])
-@cross_origin(support_credentials=True)
-def sequence():
+@app.route('/sequences', methods=['POST'])
+def getSequences():
     pdb_code = request.json['pdbcode']
 
-    return get_sequence_from(pdb_code) if PdbValidators.validate_pdb_code(pdb_code) else ''
+    result = pdb_service.get_sequence_from(pdb_code)
+
+    return json.dumps(result)
 
 
 @app.route('/homologousSequence', methods=['POST'])
-@cross_origin(support_credentials=True)
 def homologous_sequences():
-    sequences = homologous_sequences_details()
-    result = [{'title': seq.get('title'), 'sequence': seq.get('sequence')} for seq in sequences.get('d')]
-    return {'d': result}
+    pdb_code = request.json['pdbcode']
+
+    result = blast_service.blast_records_just_sequences(pdb_code)
+
+    return json.dumps(result)
 
 
-@app.route('/homologousSequenceDetails', methods=['POST'])
-@cross_origin(support_credentials=True)
-def homologous_sequences_details():
-    main_sequence = sequence()
-    print(main_sequence)
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    pdb_code = request.json['pdbcode']
+    sequences = blast_service.blast_records(pdb_code)
 
-    records = blast_records(main_sequence)
-
-    results = []
-    for alignment in records.alignments:
-        aligmened_sequence = ''
-        aligmened_matches = ''
-        for hsp in alignment.hsps:
-            aligmened_sequence = aligmened_sequence + hsp.sbjct
-            aligmened_matches = aligmened_matches + hsp.match
-
-        results.append({
-            'title': alignment.title.split('>')[0],
-            'sequence' : aligmened_sequence.replace('-', ''),
-            'aligmened_matches': aligmened_matches,
-            'aligmened_sequence': aligmened_sequence
-        })
-
-    return {'d': results}
+    return clustal_service.get_alignment_from(sequences)
 
 
 if __name__ == '__main__':
