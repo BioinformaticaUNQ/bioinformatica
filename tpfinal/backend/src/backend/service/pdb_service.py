@@ -49,4 +49,8 @@ class PDBService:
         # Guardo archivo fasta en fasta folder
         save_fasta_file(pdb_code, fasta_content)
 
-        return fasta_content.split("\n")
+        lines = fasta_content.split("\n")[:-1]
+
+        sequences = [lines[i] + "\n" + lines[i + 1] for i in range(0, len(lines), 2)]
+
+        return sequences

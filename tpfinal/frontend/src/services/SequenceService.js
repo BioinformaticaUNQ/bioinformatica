@@ -3,15 +3,15 @@ const SERVICE_URL = 'http://localhost:5000/';
 
 const SequenceService = () => {
 
-    const getSequences = (pdbCode) => {
-        return axios.post(`${SERVICE_URL}sequence`,
+    const getSequence = (pdbCode) => {
+        return axios.post(`${SERVICE_URL}sequences`,
             {
-                pdbcode: pdbCode
+                pdbcode: pdbCode.toUpperCase()
             })
     }
 
     return {
-        getSequences: getSequences
+        getSequence: getSequence
     }
 }
 
