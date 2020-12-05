@@ -10,6 +10,9 @@ const SequenceService = () => {
             })
     }
 
+    const conseguirTodaLaInfo = (secuencia) => {
+
+    }
     return {
         getSequence: getSequence
     }

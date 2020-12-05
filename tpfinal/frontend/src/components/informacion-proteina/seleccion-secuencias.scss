@@ -1,14 +1,22 @@
-.contenedor-secuencias {
-  height: auto;
+.container-padre {
   width: 60%;
-  background-color: white;
-  border-radius: 5px;
-  border: 2px #456268 solid;
-  margin: 10px;
+  .contenedor-secuencias {
+    height: auto;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px #456268 solid;
+    margin: 10px;
 
-  .contenedor-secuencia {
-    word-wrap: break-word;
-    text-align: initial;
-    margin: 10px 15px;
+    .contenedor-secuencia {
+      word-wrap: break-word;
+      text-align: initial;
+      margin: 10px 15px;
+
+      .texto-secuencia {
+        &:hover {
+          color: #79a3b1;
+        }
+      }
+    }
   }
 }

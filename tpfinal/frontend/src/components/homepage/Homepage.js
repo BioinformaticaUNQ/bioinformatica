@@ -29,6 +29,11 @@ export class Homepage extends React.Component {
         return esPdbValido
     }
 
+    conseguirTodaLaInfo = (secuencia) => {
+        debugger
+        SequenceService().conseguirTodaLaInfo(secuencia)
+    }
+
     render() {
         return(
             <div className='homepage'>
@@ -52,7 +57,9 @@ export class Homepage extends React.Component {
                     </div>
                     }
                 </div>
-                <SeleccionSecuencia mostrarSeleccionSecuencias={this.state.mostrarSeleccionSecuencias} secuenciasParaElegir={this.state.secuenciasParaElegir}/>
+                <SeleccionSecuencia mostrarSeleccionSecuencias={this.state.mostrarSeleccionSecuencias}
+                                    secuenciasParaElegir={this.state.secuenciasParaElegir}
+                                    onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
             </div>
         )
     }

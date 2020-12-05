@@ -10,20 +10,27 @@ export class SeleccionSecuencia extends React.Component {
 
     render() {
         return(
-            <div className='contenedor-secuencias'>
+            <div className='container-padre'>
                 {this.props.mostrarSeleccionSecuencias &&
                 <div>
-                    {
-                        this.props.secuenciasParaElegir.map(secuencia => {
-                            return (
-                                <div className='contenedor-secuencia'>
-                                    <span className='texto-secuencia'>{secuencia}</span>
-                                </div>)
-                        })
-                    }
+                    <p>Por favor, selecciona una secuencia</p>
+                    <div className='contenedor-secuencias'>
+                        <div>
+                            {
+                                this.props.secuenciasParaElegir.map(secuencia => {
+                                    return (
+                                        <div className='contenedor-secuencia'
+                                             onClick={() => this.props.onSecuenciaSeleccionada(secuencia)}>
+                                            <span className='texto-secuencia'>{secuencia}</span>
+                                        </div>)
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
                 }
             </div>
+
         )
     }
 }
