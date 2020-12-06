@@ -29,11 +29,12 @@ def getSequences():
 @app.route('/homologousSequence', methods=['POST'])
 @cross_origin(support_credentials=True)
 def homologous_sequences():
-    pdb_code = request.json['pdbcode']
+    sequence = request.json['sequence']
 
-    result = blast_service.blast_records_just_sequences(pdb_code)
+    result = blast_service.blast_records_just_sequences(sequence)
 
     return json.dumps(result)
+
 
 @app.route('/analyze', methods=['POST'])
 @cross_origin(support_credentials=True)
