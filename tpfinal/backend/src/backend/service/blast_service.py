@@ -1,6 +1,6 @@
 from Bio.Blast import NCBIXML
 import os
-from src.backend.service.pdb_service import PDBService
+from src.backend.service.pdb_service import save_fasta_file
 
 
 class BlastService:
@@ -10,9 +10,12 @@ class BlastService:
         pero ya fue es mas facil organizarse asi.
     """
 
-    def blast_records(self, pdb_code):
-        # Genero el archivo fasta en nuestra fasta folder
-        PDBService().get_sequence_from(pdb_code)
+    def blast_records(self, fasta_sequence):
+        # Me quedo con el id y con la secuencia
+        pdb_code, _ = fasta_sequence.split("\n")
+        pdb_code = pdb_code.split("|")[0][1:]
+
+        save_fasta_file(pdb_code, fasta_sequence)
 
         # Obtengo todos los paths necesarios para realizar nuestra query local
         fasta, blast_output, db = self.create_paths(pdb_code)
@@ -77,8 +80,8 @@ class BlastService:
 
         return results
 
-    def blast_records_just_sequences(self, pdb_code):
-        sequences = self.blast_records(pdb_code)
+    def blast_records_just_sequences(self, fasta_sequence):
+        sequences = self.blast_records(fasta_sequence)
 
         result = [{'title': seq.get('title'), 'sequence': seq.get('sequence')} for seq in sequences]
 

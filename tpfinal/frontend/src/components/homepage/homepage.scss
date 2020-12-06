@@ -1,0 +1,40 @@
+.homepage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fcf8ec;
+
+  .titulo {
+    font-size: 32px;
+    padding: 20px;
+    width: 35%;
+  }
+
+  .codigo-pdb {
+    .input-codigo-pdb {
+      height: 30px;
+      border-radius: 5px;
+      font-size: 15px;
+
+      &.with-error {
+        border: 2px solid darkred;
+      }
+    }
+
+    .pdb-id-error {
+      padding: 10px;
+      color: darkred;
+    }
+  }
+
+  .boton-consulta-pdb {
+    background-color: #456268;
+    color: #fcf8ec;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 17px;
+    margin: 0 10px;
+  }
+}
