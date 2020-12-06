@@ -4,6 +4,13 @@ from src.backend.endpoint.endpoints import *
 import os
 
 
+def get_pdb_code(seqId):
+    ''' devuelve el pdb code y el codigo de la cadena. Util en un futuro
+        seqId = pdb|2XRG|A
+        response (2XRG, A)
+    '''
+    return (seqId.split('|')[1], seqId.split('|')[2])
+
 def save_fasta_file(id, string_fasta):
 
     # Encuentro al path asi fasta folder
@@ -40,6 +47,8 @@ class PDBService:
         # Envio la request para obtener el fasta asociado a ese pdb_code
         # en caso que la request haya vuelto con algo distinto a un 200
         # levanta una exception
+        fasta_content = ''
+
         response = requests.get(FASTA_URL.format(pdb_code))
         response.raise_for_status()
 
@@ -50,3 +59,5 @@ class PDBService:
         save_fasta_file(pdb_code, fasta_content)
 
         return fasta_content.split("\n")
+
+

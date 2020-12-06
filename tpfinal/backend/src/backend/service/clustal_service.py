@@ -1,6 +1,7 @@
 from Bio import AlignIO
-from Bio.Align import MultipleSeqAlignment
-from Bio.SeqRecord import SeqRecord
+from src.backend.service.pdb_service import get_pdb_code
+#from Bio.Align import MultipleSeqAlignment
+#from Bio.SeqRecord import SeqRecord
 
 
 class ClustalService:
@@ -24,7 +25,14 @@ class ClustalService:
         self.clustal_runner.run(self._file('fasta'))
 
     def _get_alignment(self):
-        return [seq.seq.__str__() for seq in AlignIO.read(self._file('aln'), "clustal")]
+        c = AlignIO.read(self._file('aln'), "clustal")
+        return [self._create_record_alignment(seq) for seq in c]
+
+    def _create_record_alignment(self, aligmentedSequence):
+        return {
+            'pdbcode'   : get_pdb_code(aligmentedSequence.id)[0],
+            'sequence'  : aligmentedSequence.seq.__str__()
+        }
 
     def get_alignment_from(self, sequences):
 

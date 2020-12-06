@@ -38,7 +38,8 @@ def homologous_sequences():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    pdb_code = request.form['pdbcode']
+    pdb_code = request.json['pdbcode']
+
     sequences = blast_service.blast_records(pdb_code)
 
     return json.dumps(clustal_service.get_alignment_from(sequences))
