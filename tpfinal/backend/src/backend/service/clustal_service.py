@@ -1,15 +1,14 @@
-import os
-from Bio.Align.Applications import ClustalwCommandline
 from Bio import AlignIO
-from Bio.Align import MultipleSeqAlignment
-from Bio.SeqRecord import SeqRecord
-from src.backend.constants.constants import clustalw
+from src.backend.service.pdb_service import get_pdb_code
+#from Bio.Align import MultipleSeqAlignment
+#from Bio.SeqRecord import SeqRecord
 
 
 class ClustalService:
 
-    def __init__(self):
-        self.file_name = "analyze"
+    def __init__(self, clustal_runner):
+        self.file_name = "./clustal/analyze"
+        self.clustal_runner = clustal_runner
 
     def _file(self, extension):
         return self.file_name + '.'+ extension
@@ -23,12 +22,17 @@ class ClustalService:
             text_file.write(fasta_records)
 
     def run(self):
-        clustalw_cline = ClustalwCommandline(clustalw, infile=self._file('fasta'))
-        #assert os.path.isfile(clustalw), "Clustal W executable missing"
-        stdout, stderr = clustalw_cline()
+        self.clustal_runner.run(self._file('fasta'))
 
     def _get_alignment(self):
-        return [seq.seq.__str__() for seq in AlignIO.read(self._file('aln'), "clustal")]
+        c = AlignIO.read(self._file('aln'), "clustal")
+        return [self._create_record_alignment(seq) for seq in c]
+
+    def _create_record_alignment(self, aligmentedSequence):
+        return {
+            'pdbcode'   : get_pdb_code(aligmentedSequence.id)[0],
+            'sequence'  : aligmentedSequence.seq.__str__()
+        }
 
     def get_alignment_from(self, sequences):
 
