@@ -1,6 +1,7 @@
 # coding=utf-8
 from flask import Flask, request
 
+from src.backend.environment_strategies.environment_strategy import LinuxClustalRunner, WindowsClustalRunner
 from src.backend.service.clustal_service import ClustalService
 from src.backend.service.blast_service import BlastService
 from src.backend.service.pdb_service import PDBService
@@ -9,9 +10,12 @@ import json
 
 app = Flask(__name__)
 
+clustal_runner = LinuxClustalRunner()
+#clustal_runner = WindowsClustalRunner()
+
 pdb_service = PDBService()
 blast_service = BlastService()
-clustal_service = ClustalService()
+clustal_service = ClustalService(clustal_runner)
 
 
 @app.route('/sequences', methods=['POST'])
@@ -34,10 +38,10 @@ def homologous_sequences():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    pdb_code = request.json['pdbcode']
+    pdb_code = request.form['pdbcode']
     sequences = blast_service.blast_records(pdb_code)
 
-    return clustal_service.get_alignment_from(sequences)
+    return json.dumps(clustal_service.get_alignment_from(sequences))
 
 
 if __name__ == '__main__':
