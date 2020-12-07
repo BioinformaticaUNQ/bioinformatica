@@ -39,10 +39,11 @@ def homologous_sequences():
 @app.route('/analyze', methods=['POST'])
 @cross_origin(support_credentials=True)
 def analyze():
-    pdb_code = request.json['pdbcode']
-    sequences = blast_service.blast_records(pdb_code)
-
-    return clustal_service.get_alignment_from(sequences)
+    sequence = request.json['sequence']
+    sequences = blast_service.blast_records(sequence)
+    result = clustal_service.get_alignment_from(sequences)
+    
+    return json.dumps(result)
 
 
 if __name__ == '__main__':
