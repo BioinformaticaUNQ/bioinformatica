@@ -8,9 +8,11 @@
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.21.0",
+    "msa": "^1.0.3",
     "node-sass": "^4.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-msa-viewer": "^1.0.1",
     "react-scripts": "4.0.0",
     "web-vitals": "^0.2.4"
   },

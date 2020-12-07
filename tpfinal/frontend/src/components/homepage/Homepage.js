@@ -2,6 +2,21 @@ import React from "react";
 import "./homepage.scss"
 import {SeleccionSecuencia} from "../informacion-proteina/SeleccionSecuencia";
 import SequenceService from "../../services/SequenceService";
+import MSAViewer, {Labels, OverviewBar, PositionBar, SequenceOverview, SequenceViewer} from "react-msa-viewer";
+import {number} from "prop-types";
+
+const sequences = [
+    {name: "2NRL", sequence:
+            "--------------------------------------------------------------------------------------------------------------------------------------------------DFDAVLKCWGPVEAD-YTTIGGLVLTRLFKEHPETQKLFPKFA-GIA-QADIAGNAAVSAHGATVLKKLGELLKAK---GSHAAILKPLANS--HATKHKIPINNFKLISEVLVKVMQEKAG---LDAGGQTALRNVMGIIIADLEANYKELGFSG"},
+    {name: "3QM5", sequence:
+            "--------------------------------------------------------------------------------------------------------------------------------------------------DFDAVLKCWGPVEAD-YTTIGGLVLTRLFKEHPETQKLFPKFA-GIA-QADIAGNAAVSAHGATVLKKLGELLKAK---GSHAAILKPLANS--HATKHKIPINNFKLISEVLVKVMQEKAG---LDAGGQTALRNVMGIIIADLEANYKELGFS-"},
+    {name: "2NRM", sequence:
+            "--------------------------------------------------------------------------------------------------------------------------------------------------DFDAVLKXWGPVEAD-YTTIGGLVLTRLFKEHPETQKLFPKFA-GIA-QADIAGNAAVSAHGATVLKKLGELLKAK---GSHAAILKPLANS--HATKHKIPINNFKLISEVLVKVMQEKAG---LDAGGQTALRNVMGIIIADLEANYKELGFSG"},
+    ]
+
+const options = {
+    sequences
+};
 
 export class Homepage extends React.Component {
     constructor(props) {
@@ -60,6 +75,7 @@ export class Homepage extends React.Component {
                 <SeleccionSecuencia mostrarSeleccionSecuencias={this.state.mostrarSeleccionSecuencias}
                                     secuenciasParaElegir={this.state.secuenciasParaElegir}
                                     onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
+                <MSAViewer {...options}/>
             </div>
         )
     }
