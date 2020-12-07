@@ -31,7 +31,8 @@ class ClustalService:
     def _create_record_alignment(self, aligmentedSequence):
         return {
             'pdbcode': get_pdb_code(aligmentedSequence.id)[0],
-            'sequence': aligmentedSequence.seq.__str__()
+            'sequence': aligmentedSequence.seq.__str__(),
+            'chains': get_pdb_code(aligmentedSequence.id)[1]
         }
 
     def get_alignment_from(self, sequences):
