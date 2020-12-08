@@ -1,27 +1,28 @@
 # coding=utf-8
 from flask import Flask, request
+from flask_cors import CORS
 
 from src.backend.environment_strategies.environment_strategy import LinuxClustalRunner, WindowsClustalRunner
 from src.backend.service.clustal_service import ClustalService
 from src.backend.service.blast_service import BlastService
+from src.backend.service.dssp_service import DSSPService
 from src.backend.service.pdb_service import PDBService
-from flask_cors import CORS, cross_origin
 import json
 
 
 app = Flask(__name__)
 CORS(app, suppport_credentials=True)
 
-clustal_runner = LinuxClustalRunner()
-#clustal_runner = WindowsClustalRunner()
+#clustal_runner = LinuxClustalRunner()
+clustal_runner = WindowsClustalRunner()
 
 pdb_service = PDBService()
 blast_service = BlastService()
 clustal_service = ClustalService(clustal_runner)
+dssp_service = DSSPService()
 
 
 @app.route('/sequences', methods=['POST'])
-@cross_origin(support_credentials=True)
 def getSequences():
     pdb_code = request.json['pdbcode']
 
@@ -31,23 +32,23 @@ def getSequences():
 
 
 @app.route('/homologousSequence', methods=['POST'])
-@cross_origin(support_credentials=True)
 def homologous_sequences():
-    sequence = request.json['sequence']
+    pdb_code = request.json['pdbcode']
 
-    result = blast_service.blast_records_just_sequences(sequence)
+    result = blast_service.blast_records_just_sequences(pdb_code)
 
     return json.dumps(result)
 
 
 @app.route('/analyze', methods=['POST'])
-@cross_origin(support_credentials=True)
 def analyze():
-    pdb_code = request.json['pdbcode']
+    sequence = request.json['sequence']
+    sequences = blast_service.blast_records(sequence)
+    primary_structure = clustal_service.get_alignment_from(sequences)
+    chains = sequence.split('|')[1].replace('Chains', '')
+    result = dssp_service.get_alignment_from(primary_structure, chains)
 
-    sequences = blast_service.blast_records(pdb_code)
-
-    return json.dumps(clustal_service.get_alignment_from(sequences))
+    return json.dumps(result)
 
 
 if __name__ == '__main__':

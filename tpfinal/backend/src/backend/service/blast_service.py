@@ -1,6 +1,6 @@
 from Bio.Blast import NCBIXML
 import os
-from src.backend.service.pdb_service import save_fasta_file
+from src.backend.service.pdb_service import save_fasta_file, PDBService
 
 
 class BlastService:
@@ -65,17 +65,10 @@ class BlastService:
         results = []
         for record in records:
             for alignment in record.alignments:
-                aligmened_sequence = ''
-                aligmened_matches = ''
-                for hsp in alignment.hsps:
-                    aligmened_sequence = aligmened_sequence + hsp.sbjct
-                    aligmened_matches = aligmened_matches + hsp.match
 
                 results.append({
                     'title': alignment.title.split('>')[0],
-                    'sequence': aligmened_sequence.replace('-', ''),
-                    'aligmened_matches': aligmened_matches,
-                    'aligmened_sequence': aligmened_sequence
+                    'sequence': PDBService.get_sequence(alignment.hit_id.split('|')[1], alignment.hit_id.split('|')[2])
                 })
 
         return results
