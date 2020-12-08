@@ -44,17 +44,9 @@ def homologous_sequences():
 def analyze():
     sequence = request.json['sequence']
     sequences = blast_service.blast_records(sequence)
-    result = clustal_service.get_alignment_from(sequences)
-
-    return json.dumps(result)
-
-@app.route('/secondaryStructure', methods=['POST'])
-def secondaryStructure():
-    sequence = request.form['sequence']
-    sequences = blast_service.blast_records(sequence,  0.005, 12, 1)
-    result = clustal_service.get_alignment_from(sequences)
+    primary_structure = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '')
-    result = dssp_service.get_alignment_from(result, chains)
+    result = dssp_service.get_alignment_from(primary_structure, chains)
 
     return json.dumps(result)
 
