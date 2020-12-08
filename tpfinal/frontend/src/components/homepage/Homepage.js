@@ -2,6 +2,8 @@ import React from "react";
 import "./homepage.scss"
 import {SeleccionSecuencia} from "../informacion-proteina/SeleccionSecuencia";
 import SequenceService from "../../services/SequenceService";
+import {InformacionSobreLaSecuencia} from "../informacion-secuencia/InformacionSobreLaSecuencia";
+
 import Viewer from '../viewer/Viewer';
 
 
@@ -12,7 +14,8 @@ export class Homepage extends React.Component {
             pdbCode: '',
             mostrarSeleccionSecuencias: false,
             mostrarErrorDeCodigoPdb: false,
-            mostrarProteina3d: false
+            mostrarProteina3d: false,
+            mostrarInformacionAnalizada: false
         }
     }
 
@@ -21,7 +24,6 @@ export class Homepage extends React.Component {
         if(this.esPdbValido()) {
             SequenceService().getSequence(this.state.pdbCode)
                 .then((response) => {
-
                     this.setState({mostrarSeleccionSecuencias: true, secuenciasParaElegir: response.data})
                 })
         }
@@ -34,18 +36,10 @@ export class Homepage extends React.Component {
     }
 
     conseguirTodaLaInfo = (secuencia) => {
-        debugger
-        SequenceService().conseguirTodaLaInfo(secuencia)
+        this.setState({ mostrarSeleccionSecuencias: false, mostrarInformacionAnalizada: true})
     }
 
-    renderViewer() {
-        if (this.state.mostrarProteina3d) {
-            return (
-                <Viewer protein="5KVU"> </Viewer>
-            )
-        }
-            
-    }
+
 
     render() {
         return(
@@ -74,8 +68,7 @@ export class Homepage extends React.Component {
                                     secuenciasParaElegir={this.state.secuenciasParaElegir}
                                     onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
 
-                {this.renderViewer()}
-               
+                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia codigoPdb={this.state.pdbCode}/>}
             </div>
         )
     }
