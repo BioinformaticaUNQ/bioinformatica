@@ -42,7 +42,7 @@ def homologous_sequences():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    sequence = request.form['sequence']
+    sequence = request.json['sequence']
     sequences = blast_service.blast_records(sequence)
     result = clustal_service.get_alignment_from(sequences)
 
@@ -50,7 +50,7 @@ def analyze():
 
 @app.route('/secondaryStructure', methods=['POST'])
 def secondaryStructure():
-    sequence = request.form['sequence']
+    sequence = request.json['sequence']
     sequences = blast_service.blast_records(sequence)
     result = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '')
