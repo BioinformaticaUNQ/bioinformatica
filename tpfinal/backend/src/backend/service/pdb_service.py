@@ -76,7 +76,7 @@ class PDBService:
 
 
 def findFirst( list , chain):
-
+    ''' list = [ '' , '5KVU | chains A, B, a, b, 1,2 | nombre \n secuencia']'''
     for l in list:
         if not l:
             continue

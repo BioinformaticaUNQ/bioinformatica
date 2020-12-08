@@ -68,7 +68,7 @@ class BlastService:
 
                 results.append({
                     'title': alignment.title.split('>')[0],
-                    'sequence': PDBService.get_sequence_from(alignment.hit_id[1], alignment.hit_id[2])
+                    'sequence': PDBService.get_sequence_from(alignment.hit_id.split('|')[1], alignment.hit_id.split('|')[2])
                 })
 
         return results
