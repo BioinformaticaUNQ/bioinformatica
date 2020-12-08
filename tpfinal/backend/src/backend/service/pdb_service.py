@@ -39,7 +39,7 @@ class PDBService:
         response.raise_for_status()
 
         # Retorno el contenido de la respuesta parseada
-        return response.content.decode("utf-8")
+        return response.text
 
     @classmethod
     def get_sequence_from(cls, pdb_code):
@@ -53,7 +53,7 @@ class PDBService:
         response.raise_for_status()
 
         # Parseo contenido del fasta
-        fasta_content = response.content.decode("utf-8")
+        fasta_content = response.text
 
         # Guardo archivo fasta en fasta folder
         save_fasta_file(pdb_code, fasta_content)

@@ -2,6 +2,8 @@ import React from "react";
 import "./homepage.scss"
 import {SeleccionSecuencia} from "../informacion-proteina/SeleccionSecuencia";
 import SequenceService from "../../services/SequenceService";
+import Viewer from '../viewer/Viewer';
+
 
 export class Homepage extends React.Component {
     constructor(props) {
@@ -12,6 +14,7 @@ export class Homepage extends React.Component {
             mostrarErrorDeCodigoPdb: false
         }
     }
+
 
     getSequences = () => {
         if(this.esPdbValido()) {
@@ -60,6 +63,7 @@ export class Homepage extends React.Component {
                 <SeleccionSecuencia mostrarSeleccionSecuencias={this.state.mostrarSeleccionSecuencias}
                                     secuenciasParaElegir={this.state.secuenciasParaElegir}
                                     onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
+               <Viewer protein="5KVU"> </Viewer>
             </div>
         )
     }
