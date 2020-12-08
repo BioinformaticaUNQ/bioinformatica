@@ -14,7 +14,7 @@ def get_pdb_code(seqId):
 def save_fasta_file(id, string_fasta):
 
     # Encuentro al path asi fasta folder
-    dir = os.path.join(os.getcwd(), "fasta\\")
+    dir = os.path.join(os.getcwd(), "fasta/")
 
     # Guardo un fasta file en el directorio de fasta
     # con el contenido pasado como argumento
@@ -63,4 +63,26 @@ class PDBService:
         sequences = [lines[i] + "\n" + lines[i + 1] for i in range(0, len(lines), 2)]
 
         return sequences
+
+    @classmethod
+    def get_sequence_from(self, pdb_code, chain):
+        response = requests.get(FASTA_URL.format(pdb_code))
+        response.raise_for_status()
+
+        # Parseo contenido del fasta
+        fasta_content = response.content.decode("utf-8")
+
+        return findFirst(fasta_content.split('>'), chain)
+
+
+def findFirst( list , chain):
+    ''' list = [ '' , '5KVU | chains A, B, a, b, 1,2 | nombre \n secuencia']'''
+    for l in list:
+        if not l:
+            continue
+        h = l.split('|')[1].replace('Chains', '')
+        if chain in h:
+            return l.split('|')[3].split('\n')[1]
+
+
 
