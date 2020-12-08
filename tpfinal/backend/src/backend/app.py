@@ -50,8 +50,8 @@ def analyze():
 
 @app.route('/secondaryStructure', methods=['POST'])
 def secondaryStructure():
-    sequence = request.json['sequence']
-    sequences = blast_service.blast_records(sequence)
+    sequence = request.form['sequence']
+    sequences = blast_service.blast_records(sequence,  0.005, 12, 1)
     result = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '')
     result = dssp_service.get_alignment_from(result, chains)
