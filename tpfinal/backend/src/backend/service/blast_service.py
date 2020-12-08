@@ -68,7 +68,7 @@ class BlastService:
         results = []
         for record in records:
             for alignment in record.alignments:
-
+                #if (self.calculateScore(alignment))
                 results.append({
                     'title': alignment.title.split('>')[0],
                     'sequence': PDBService.get_sequence(alignment.hit_id.split('|')[1], alignment.hit_id.split('|')[2])

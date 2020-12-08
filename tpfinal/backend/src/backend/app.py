@@ -24,7 +24,7 @@ dssp_service = DSSPService()
 
 @app.route('/sequences', methods=['POST'])
 def getSequences():
-    pdb_code = request.json['pdbcode']
+    pdb_code = request.form['pdbcode']
 
     result = pdb_service.get_sequence_from(pdb_code)
 
@@ -42,7 +42,7 @@ def homologous_sequences():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    sequence = request.json['sequence']
+    sequence = request.form['sequence']
     sequences = blast_service.blast_records(sequence)
     primary_structure = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '')
