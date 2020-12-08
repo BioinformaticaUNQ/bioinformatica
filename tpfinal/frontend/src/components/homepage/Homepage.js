@@ -39,14 +39,7 @@ export class Homepage extends React.Component {
         this.setState({ mostrarSeleccionSecuencias: false, mostrarInformacionAnalizada: true})
     }
 
-    renderViewer() {
-        if (this.state.mostrarProteina3d) {
-            return (
-                <Viewer protein="5KVU"> </Viewer>
-            )
-        }
 
-    }
 
     render() {
         return(
@@ -75,9 +68,7 @@ export class Homepage extends React.Component {
                                     secuenciasParaElegir={this.state.secuenciasParaElegir}
                                     onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
 
-                {this.renderViewer()}
-
-                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia/>}
+                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia codigoPdb={this.state.pdbCode}/>}
             </div>
         )
     }

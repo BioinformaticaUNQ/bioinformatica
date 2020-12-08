@@ -1,6 +1,7 @@
 import React from "react";
 import "./informacion-secuencia.scss"
 import MSAViewer, {Labels, OverviewBar, PositionBar, SequenceOverview, SequenceViewer} from "react-msa-viewer";
+import Viewer from "../viewer/Viewer";
 
 const sequences = [
     {name: "2NRL", sequence:
@@ -48,7 +49,7 @@ export class InformacionSobreLaSecuencia extends React.Component {
                 <div className='contenido'>
                     {this.state.opcionSeleccionada === 1 && <MSAViewer {...options}/>}
                     {this.state.opcionSeleccionada === 2 && <span>aca va la info de estructura secundaria</span>}
-                    {this.state.opcionSeleccionada === 3 && <span>aca va la info de estructura terciaria</span>}
+                    {this.state.opcionSeleccionada === 3 && <Viewer protein={this.props.codigoPdb}> </Viewer>}
                 </div>
             </div>
         )
