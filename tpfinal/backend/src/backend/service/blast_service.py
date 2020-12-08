@@ -13,7 +13,7 @@ class BlastService:
     def blast_records(self, fasta_sequence):
         # Me quedo con el id y con la secuencia
         pdb_code, _ = fasta_sequence.split("\n")
-        pdb_code = pdb_code.split("|")[0][1:]
+        pdb_code = pdb_code.split("|")[0][1:5]
 
         save_fasta_file(pdb_code, fasta_sequence)
 

@@ -4,7 +4,6 @@ import {SeleccionSecuencia} from "../informacion-proteina/SeleccionSecuencia";
 import SequenceService from "../../services/SequenceService";
 import {InformacionSobreLaSecuencia} from "../informacion-secuencia/InformacionSobreLaSecuencia";
 
-import Viewer from '../viewer/Viewer';
 
 
 export class Homepage extends React.Component {
@@ -15,7 +14,10 @@ export class Homepage extends React.Component {
             mostrarSeleccionSecuencias: false,
             mostrarErrorDeCodigoPdb: false,
             mostrarProteina3d: false,
-            mostrarInformacionAnalizada: false
+            mostrarInformacionAnalizada: false,
+            dssps: [],
+            sequence: [],
+            loading: false 
         }
     }
 
@@ -36,8 +38,33 @@ export class Homepage extends React.Component {
     }
 
     conseguirTodaLaInfo = (secuencia) => {
-        this.setState({ mostrarSeleccionSecuencias: false, mostrarInformacionAnalizada: true})
+        
+        this.setState({loading: true, mostrarSeleccionSecuencias: false})
+        
+        SequenceService().conseguirTodaLaInfo(secuencia).then((response) => {
+
+            const dssps = response.data.map(info => {
+                return   {
+                    name: info['sequence']['pdbcode'],
+                    sequence: info['dssp']
+                    }
+            })
+    
+            const sequences = response.data.map(info => {
+              return   {
+                name: info['sequence']['pdbcode'],
+                sequence: info['sequence']['sequence']
+                }
+            })
+
+            this.setState({mostrarInformacionAnalizada: true, 
+                dssps: dssps, sequences: sequences, loading: false})
+
+        }).catch(() => {
+            console.log("Esto es una mierda")
+        })
     }
+
 
 
 
@@ -68,7 +95,10 @@ export class Homepage extends React.Component {
                                     secuenciasParaElegir={this.state.secuenciasParaElegir}
                                     onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
 
-                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia codigoPdb={this.state.pdbCode}/>}
+                    
+                {this.state.loading && <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}
+                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia codigoPdb={this.state.pdbCode} 
+                sequences={this.state.sequences} dssps={this.state.dssps}/>}
             </div>
         )
     }
