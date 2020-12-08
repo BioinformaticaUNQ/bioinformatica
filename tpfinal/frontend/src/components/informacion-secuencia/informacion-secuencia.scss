@@ -1,0 +1,30 @@
+.informacion-secuencia {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+
+    .botonera {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+
+        .columna-boton {
+            width: 33%;
+            .boton {
+                background-color: #79a3b1;
+                color: #fcf8ec;
+                height: 40px;
+                border-radius: 5px;
+                font-size: 17px;
+                margin: 0 10px;
+            }
+        }
+    }
+
+    .contenido {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+}

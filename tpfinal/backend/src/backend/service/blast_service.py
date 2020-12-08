@@ -13,7 +13,7 @@ class BlastService:
     def blast_records(self, fasta_sequence, evalue=0.001,  gapopen=11, gapextend=1, matrix='BLOSUM62'):
         # Me quedo con el id y con la secuencia
         pdb_code, _ = fasta_sequence.split("\n")
-        pdb_code = pdb_code.split("|")[0][1:]
+        pdb_code = pdb_code.split("|")[0][1:5]
 
         save_fasta_file(pdb_code, fasta_sequence)
 
@@ -68,7 +68,6 @@ class BlastService:
         results = []
         for record in records:
             for alignment in record.alignments:
-                #if (self.calculateScore(alignment))
                 results.append({
                     'title': alignment.title.split('>')[0],
                     'sequence': PDBService.get_sequence(alignment.hit_id.split('|')[1], alignment.hit_id.split('|')[2])

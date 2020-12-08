@@ -63,7 +63,7 @@ class PDBService:
 
         lines = fasta_content.split("\n")[:-1]
 
-        sequences = [lines[i] + "\n" + lines[i + 1] for i in range(0, len(lines), 2)]
+        sequences = [lines[i] + "\n " + lines[i + 1] for i in range(0, len(lines), 2)]
 
         return sequences
 
