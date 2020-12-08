@@ -4,7 +4,7 @@ from src.backend.service.pdb_service import save_fasta_file, PDBService
 
 
 class BlastService:
-
+    minimun_identity_expected = 40
     """
         Esto podria no ser una clase dado que no tiene colaboradores internos
         pero ya fue es mas facil organizarse asi.
@@ -61,9 +61,9 @@ class BlastService:
         return fasta, blast_output, db
 
     def parse_records_to_sequences(self, records):
-
         results = []
-        for record in records:
+        records_filtered = self.filter_by_identity_and_coverage(records, query_len, coverage_expected)
+        for record in records_filtered:
             for alignment in record.alignments:
 
                 results.append({
@@ -72,6 +72,25 @@ class BlastService:
                 })
 
         return results
+
+    def filter_by_identity_and_coverage(self, sequences, query_len, coverage_expected):
+        for seq in sequences:
+            hsps_of_sequence = seq.hsps[0]
+            identity = hsps_of_sequence.identity
+            query_to = hsps_of_sequence.query_to
+            query_from = hsps_of_sequence.query_from
+            if self.identity_greater_than(identity) and self.coverage_greater_than(query_to, query_from, query_len, coverage_expected):
+                continue
+
+        return sequences
+
+    def identity_greater_than(self, identity):
+        return self.minimun_identity_expected < identity
+
+    @staticmethod
+    def coverage_greater_than(query_to, query_from, query_len, coverage_expected):
+        coverage = (query_to - query_from) / query_len
+        return coverage >= coverage_expected
 
     def blast_records_just_sequences(self, fasta_sequence):
         sequences = self.blast_records(fasta_sequence)
