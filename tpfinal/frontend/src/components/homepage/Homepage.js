@@ -11,7 +11,8 @@ export class Homepage extends React.Component {
         this.state = {
             pdbCode: '',
             mostrarSeleccionSecuencias: false,
-            mostrarErrorDeCodigoPdb: false
+            mostrarErrorDeCodigoPdb: false,
+            mostrarProteina3d: false
         }
     }
 
@@ -35,6 +36,15 @@ export class Homepage extends React.Component {
     conseguirTodaLaInfo = (secuencia) => {
         debugger
         SequenceService().conseguirTodaLaInfo(secuencia)
+    }
+
+    renderViewer() {
+        if (this.state.mostrarProteina3d) {
+            return (
+                <Viewer protein="5KVU"> </Viewer>
+            )
+        }
+            
     }
 
     render() {
@@ -63,7 +73,9 @@ export class Homepage extends React.Component {
                 <SeleccionSecuencia mostrarSeleccionSecuencias={this.state.mostrarSeleccionSecuencias}
                                     secuenciasParaElegir={this.state.secuenciasParaElegir}
                                     onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
-               <Viewer protein="5KVU"> </Viewer>
+
+                {this.renderViewer()}
+               
             </div>
         )
     }

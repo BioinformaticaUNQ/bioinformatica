@@ -13,8 +13,8 @@ import json
 app = Flask(__name__)
 CORS(app, suppport_credentials=True)
 
-clustal_runner = LinuxClustalRunner()
-#clustal_runner = WindowsClustalRunner()
+#clustal_runner = LinuxClustalRunner()
+clustal_runner = WindowsClustalRunner()
 
 pdb_service = PDBService()
 blast_service = BlastService()
@@ -44,17 +44,9 @@ def homologous_sequences():
 def analyze():
     sequence = request.json['sequence']
     sequences = blast_service.blast_records(sequence)
-    result = clustal_service.get_alignment_from(sequences)
-
-    return json.dumps(result)
-
-@app.route('/secondaryStructure', methods=['POST'])
-def secondaryStructure():
-    sequence = request.json['sequence']
-    sequences = blast_service.blast_records(sequence)
-    result = clustal_service.get_alignment_from(sequences)
+    primary_structure = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '')
-    result = dssp_service.get_alignment_from(result, chains)
+    result = dssp_service.get_alignment_from(primary_structure, chains)
 
     return json.dumps(result)
 

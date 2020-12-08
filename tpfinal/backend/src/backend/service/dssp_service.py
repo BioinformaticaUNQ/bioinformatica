@@ -1,8 +1,8 @@
 from Bio.PDB import PDBList
-from Bio.PDB.DSSP import dssp_dict_from_pdb_file
 from Bio.PDB.DSSP import DSSP
 from Bio.PDB import PDBParser
-import queue
+from src.backend.constants.constants import *
+
 
 
 PDB_PATH = './pdb/'
@@ -37,6 +37,6 @@ class DSSPService:
         p = PDBParser()
         structure = p.get_structure(pdbcode, pdb_file)
         model = structure[0]
-        dssp = DSSP(model, pdb_file)
+        dssp = DSSP(model, pdb_file, dssp=dssp_route)
         valid_keys = [key for key in dssp.keys() if key[0] in chains]
         return [ dssp[key] for key in valid_keys]
