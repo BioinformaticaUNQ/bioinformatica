@@ -43,6 +43,7 @@ def homologous_sequences():
 @app.route('/analyze', methods=['POST'])
 def analyze():
     sequence = request.json['sequence']
+    covarage = request.json['coverage']
     sequences = blast_service.blast_records(sequence)
     primary_structure = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '')

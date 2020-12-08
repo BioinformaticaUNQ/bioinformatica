@@ -2,17 +2,18 @@ from Bio.Blast import NCBIXML
 import os
 from src.backend.service.pdb_service import save_fasta_file, PDBService
 
+minimun_identity_expected = 40
 
 class BlastService:
-    minimun_identity_expected = 40
+
     """
         Esto podria no ser una clase dado que no tiene colaboradores internos
         pero ya fue es mas facil organizarse asi.
     """
 
-    def blast_records(self, fasta_sequence):
+    def blast_records(self, fasta_sequence, covarage = 90):
         # Me quedo con el id y con la secuencia
-        pdb_code, _ = fasta_sequence.split("\n")
+        pdb_code, sequence = fasta_sequence.split("\n")
         pdb_code = pdb_code.split("|")[0][1:]
 
         save_fasta_file(pdb_code, fasta_sequence)
@@ -27,7 +28,7 @@ class BlastService:
         records = NCBIXML.parse(open(blast_output))
 
         # Retornamos "todas" las secuencias homologas a la secuencia original
-        return self.parse_records_to_sequences(records)
+        return self.parse_records_to_sequences(records, len(sequence), covarage)
 
     def query_to_local_blast(self, fasta, blast_output, db):
         # Hacemos la query a blasta de forma local
@@ -60,37 +61,40 @@ class BlastService:
 
         return fasta, blast_output, db
 
-    def parse_records_to_sequences(self, records):
+    def parse_records_to_sequences(self, records, query_len, coverage_expected):
         results = []
-        records_filtered = self.filter_by_identity_and_coverage(records, query_len, coverage_expected)
-        for record in records_filtered:
-            for alignment in record.alignments:
 
-                results.append({
-                    'title': alignment.title.split('>')[0],
-                    'sequence': PDBService.get_sequence(alignment.hit_id.split('|')[1], alignment.hit_id.split('|')[2])
-                })
+        for record in records:
+
+            for alignment in record.alignments:
+                if self.is_identity_and_coverage_valid(alignment, query_len, coverage_expected) :
+                    results.append({
+                        'title': alignment.title.split('>')[0],
+                        'sequence': PDBService.get_sequence(alignment.hit_id.split('|')[1], alignment.hit_id.split('|')[2])
+                    })
+                else:
+                    print(alignment.hit_id.split('|')[1], 'filtered')
 
         return results
 
-    def filter_by_identity_and_coverage(self, sequences, query_len, coverage_expected):
-        for seq in sequences:
-            hsps_of_sequence = seq.hsps[0]
-            identity = hsps_of_sequence.identity
-            query_to = hsps_of_sequence.query_to
-            query_from = hsps_of_sequence.query_from
-            if self.identity_greater_than(identity) and self.coverage_greater_than(query_to, query_from, query_len, coverage_expected):
-                continue
+    def is_identity_and_coverage_valid(self, alignment, query_len, coverage_expected):
 
-        return sequences
+        # seq.alignments[1].hsps[0]
+        hsps_of_sequence = alignment.hsps[0]
+        identity = hsps_of_sequence.identities
+        query_to = hsps_of_sequence.query_end
+        query_from = hsps_of_sequence.query_start
+        return self.identity_greater_than(identity) and \
+               self.coverage_greater_than(query_to, query_from, query_len, coverage_expected)
 
     def identity_greater_than(self, identity):
-        return self.minimun_identity_expected < identity
+        return minimun_identity_expected < identity
 
     @staticmethod
     def coverage_greater_than(query_to, query_from, query_len, coverage_expected):
         coverage = (query_to - query_from) / query_len
-        return coverage >= coverage_expected
+        print('Coverage:', coverage * 100)
+        return (coverage * 100) >= coverage_expected
 
     def blast_records_just_sequences(self, fasta_sequence):
         sequences = self.blast_records(fasta_sequence)
