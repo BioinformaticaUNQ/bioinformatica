@@ -9,8 +9,8 @@ PDB_PATH = './pdb/'
 class DSSPService:
 
     def get_alignment_from(self, sequences, chains):
-        #return [self._get_alignment(sequence, chains) for sequence in sequences]
-        return (self._get_alignment(sequences[3], chains), sequences[3])
+        return [{'dssp' : self._get_alignment(sequence, chains), 'sequence' : sequence} for sequence in sequences]
+        #return (self._get_alignment(sequences[3], chains), sequences[3])
 
     def _get_alignment(self, sequence, expectede_chains):
         pdbcode = sequence.get('pdbcode').lower()
