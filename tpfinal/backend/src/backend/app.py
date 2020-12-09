@@ -1,6 +1,6 @@
 # coding=utf-8
 from flask import Flask, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 from src.backend.environment_strategies.environment_strategy import LinuxClustalRunner, WindowsClustalRunner
 from src.backend.service.clustal_service import ClustalService
@@ -13,8 +13,8 @@ import json
 app = Flask(__name__)
 CORS(app, suppport_credentials=True)
 
-#clustal_runner = LinuxClustalRunner()
-clustal_runner = WindowsClustalRunner()
+clustal_runner = LinuxClustalRunner()
+#clustal_runner = WindowsClustalRunner()
 
 pdb_service = PDBService()
 blast_service = BlastService()
@@ -23,6 +23,7 @@ dssp_service = DSSPService()
 
 
 @app.route('/sequences', methods=['POST'])
+@cross_origin(support_credentials=True)
 def getSequences():
     pdb_code = request.json['pdbcode']
 
@@ -32,6 +33,7 @@ def getSequences():
 
 
 @app.route('/homologousSequence', methods=['POST'])
+@cross_origin(support_credentials=True)
 def homologous_sequences():
     pdb_code = request.json['pdbcode']
 
@@ -41,12 +43,14 @@ def homologous_sequences():
 
 
 @app.route('/analyze', methods=['POST'])
+@cross_origin(support_credentials=True)
 def analyze():
     sequence = request.json['sequence']
     covarage = request.json['coverage']
     sequences = blast_service.blast_records(sequence)
+
     primary_structure = clustal_service.get_alignment_from(sequences)
-    chains = sequence.split('|')[1].replace('Chains', '')
+    chains = sequence.split('|')[1].replace('Chains', '').replace('Chain', '')
     result = dssp_service.get_alignment_from(primary_structure, chains)
 
     return json.dumps(result)

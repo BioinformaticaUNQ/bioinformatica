@@ -11,10 +11,10 @@ class BlastService:
         pero ya fue es mas facil organizarse asi.
     """
 
-    def blast_records(self, fasta_sequence, covarage = 90):
+    def blast_records(self,fasta_sequence, evalue=0.001,  gapopen=11, gapextend=1, matrix='BLOSUM62', covarage = 90):
         # Me quedo con el id y con la secuencia
         pdb_code, sequence = fasta_sequence.split("\n")
-        pdb_code = pdb_code.split("|")[0][1:]
+        pdb_code = pdb_code.split("|")[0][1:5]
 
         save_fasta_file(pdb_code, fasta_sequence)
 
@@ -22,7 +22,7 @@ class BlastService:
         fasta, blast_output, db = self.create_paths(pdb_code)
 
         # Hacemos query de forma local
-        self.query_to_local_blast(fasta, blast_output, db)
+        self.query_to_local_blast(fasta, blast_output, db, evalue, gapopen, gapextend, matrix)
 
         # Parseamos lo devuelto por blast
         records = NCBIXML.parse(open(blast_output))
@@ -30,13 +30,16 @@ class BlastService:
         # Retornamos "todas" las secuencias homologas a la secuencia original
         return self.parse_records_to_sequences(records, len(sequence), covarage)
 
-    def query_to_local_blast(self, fasta, blast_output, db):
+    def query_to_local_blast(self, fasta, blast_output, db, evalue=0.001,  gapopen=11, gapextend=1, matrix='BLOSUM62'):
         # Hacemos la query a blasta de forma local
-        query = "blastp -query {} -out {} -db {}  -evalue {} -outfmt 5".format(
+        query = "blastp -query {} -out {} -db {}  -evalue {} -gapopen {} -gapextend {} -matrix {} -outfmt 5".format(
             fasta,
             blast_output,
             db,
-            0.001
+            evalue,
+            gapopen,
+            gapextend,
+            matrix
         )
 
         os.system(query)
@@ -63,9 +66,7 @@ class BlastService:
 
     def parse_records_to_sequences(self, records, query_len, coverage_expected):
         results = []
-
         for record in records:
-
             for alignment in record.alignments:
                 if self.is_identity_and_coverage_valid(alignment, query_len, coverage_expected) :
                     results.append({

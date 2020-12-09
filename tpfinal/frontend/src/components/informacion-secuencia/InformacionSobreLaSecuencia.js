@@ -3,27 +3,17 @@ import "./informacion-secuencia.scss"
 import MSAViewer, {Labels, OverviewBar, PositionBar, SequenceOverview, SequenceViewer} from "react-msa-viewer";
 import Viewer from "../viewer/Viewer";
 
-const sequences = [
-    {name: "2NRL", sequence:
-            "--------------------------------------------------------------------------------------------------------------------------------------------------DFDAVLKCWGPVEAD-YTTIGGLVLTRLFKEHPETQKLFPKFA-GIA-QADIAGNAAVSAHGATVLKKLGELLKAK---GSHAAILKPLANS--HATKHKIPINNFKLISEVLVKVMQEKAG---LDAGGQTALRNVMGIIIADLEANYKELGFSG"},
-    {name: "3QM5", sequence:
-            "--------------------------------------------------------------------------------------------------------------------------------------------------DFDAVLKCWGPVEAD-YTTIGGLVLTRLFKEHPETQKLFPKFA-GIA-QADIAGNAAVSAHGATVLKKLGELLKAK---GSHAAILKPLANS--HATKHKIPINNFKLISEVLVKVMQEKAG---LDAGGQTALRNVMGIIIADLEANYKELGFS-"},
-    {name: "2NRM", sequence:
-            "--------------------------------------------------------------------------------------------------------------------------------------------------DFDAVLKXWGPVEAD-YTTIGGLVLTRLFKEHPETQKLFPKFA-GIA-QADIAGNAAVSAHGATVLKKLGELLKAK---GSHAAILKPLANS--HATKHKIPINNFKLISEVLVKVMQEKAG---LDAGGQTALRNVMGIIIADLEANYKELGFSG"},
-]
-
-const options = {
-    sequences
-};
-
 
 export class InformacionSobreLaSecuencia extends React.Component {
     constructor(props) {
+        debugger
         super(props);
         this.state = {
-            opcionSeleccionada: 1
+            opcionSeleccionada: 1,
         }
     }
+
+   
 
     render() {
         return(
@@ -47,8 +37,8 @@ export class InformacionSobreLaSecuencia extends React.Component {
                 </div>
 
                 <div className='contenido'>
-                    {this.state.opcionSeleccionada === 1 && <MSAViewer {...options}/>}
-                    {this.state.opcionSeleccionada === 2 && <span>aca va la info de estructura secundaria</span>}
+                    {this.state.opcionSeleccionada === 1 && <MSAViewer sequences={this.props.sequences}/>}
+                    {this.state.opcionSeleccionada === 2 && <MSAViewer sequences={this.props.dssps}/>}
                     {this.state.opcionSeleccionada === 3 && <Viewer protein={this.props.codigoPdb}> </Viewer>}
                 </div>
             </div>
