@@ -6,6 +6,7 @@ import {InformacionSobreLaSecuencia} from "../informacion-secuencia/InformacionS
 
 
 
+
 export class Homepage extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +18,9 @@ export class Homepage extends React.Component {
             mostrarInformacionAnalizada: false,
             dssps: [],
             sequence: [],
-            loading: false 
+            loading: false,
+            evalue: null,
+            coverage: null,
         }
     }
 
@@ -65,9 +68,6 @@ export class Homepage extends React.Component {
         })
     }
 
-
-
-
     render() {
         return(
             <div className='homepage'>
@@ -79,6 +79,7 @@ export class Homepage extends React.Component {
                         <input type='text'
                                className={'input-codigo-pdb ' + (this.state.mostrarErrorDeCodigoPdb ? 'with-error' : '')}
                                value={this.state.pdbCode}
+                               placeholder={'Ingresa el PDB'}
                                onChange={(event) => this.setState({pdbCode: event.target.value})}/>
 
                         <button className='boton-consulta-pdb' onClick={this.getSequences}>
@@ -91,14 +92,31 @@ export class Homepage extends React.Component {
                     </div>
                     }
                 </div>
+
                 <SeleccionSecuencia mostrarSeleccionSecuencias={this.state.mostrarSeleccionSecuencias}
                                     secuenciasParaElegir={this.state.secuenciasParaElegir}
                                     onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
 
-                    
+                {this.state.mostrarSeleccionSecuencias &&  <div>
+                    <label>Parametros Blast</label>
+                    <br/>
+                    <label>Evalue:</label>
+                    <input type='text'
+                           className={'evalue'}
+                           value={this.state.evalue}
+                           defaultValue={0.001}
+                           onChange={(event) => this.setState({evalue: event.target.value})}/>
+                    <label>Coverage:</label>
+                    <input type='text'
+                           className={'coverage'}
+                           value={this.state.coverage}
+                           defaultValue={90}
+                           onChange={(event) => this.setState({coverage: event.target.value})}/>
+                </div> }
                 {this.state.loading && <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}
-                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia codigoPdb={this.state.pdbCode} 
+                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia codigoPdb={this.state.pdbCode}
                 sequences={this.state.sequences} dssps={this.state.dssps}/>}
+
             </div>
         )
     }
