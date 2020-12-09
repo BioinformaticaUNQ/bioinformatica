@@ -46,8 +46,8 @@ def homologous_sequences():
 @cross_origin(support_credentials=True)
 def analyze():
     sequence = request.json['sequence']
-    covarage = request.json['coverage']
-    sequences = blast_service.blast_records(sequence)
+    covarage = int(request.json['coverage'])
+    sequences = blast_service.blast_records(sequence, expected_coverage=covarage)
 
     primary_structure = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '').replace('Chain', '')

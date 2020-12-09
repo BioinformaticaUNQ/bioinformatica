@@ -11,7 +11,7 @@ class BlastService:
         pero ya fue es mas facil organizarse asi.
     """
 
-    def blast_records(self,fasta_sequence, evalue=0.001,  gapopen=11, gapextend=1, matrix='BLOSUM62', covarage = 90):
+    def blast_records(self, fasta_sequence, evalue=0.001, gapopen=11, gapextend=1, matrix='BLOSUM62', expected_coverage=90):
         # Me quedo con el id y con la secuencia
         pdb_code, sequence = fasta_sequence.split("\n")
         pdb_code = pdb_code.split("|")[0][1:5]
@@ -28,7 +28,7 @@ class BlastService:
         records = NCBIXML.parse(open(blast_output))
 
         # Retornamos "todas" las secuencias homologas a la secuencia original
-        return self.parse_records_to_sequences(records, len(sequence), covarage)
+        return self.parse_records_to_sequences(records, len(sequence), expected_coverage)
 
     def query_to_local_blast(self, fasta, blast_output, db, evalue=0.001,  gapopen=11, gapextend=1, matrix='BLOSUM62'):
         # Hacemos la query a blasta de forma local
