@@ -1,12 +1,12 @@
 import React from "react";
 import "./informacion-secuencia.scss"
-import MSAViewer, {Labels, OverviewBar, PositionBar, SequenceOverview, SequenceViewer} from "react-msa-viewer";
+import MSAViewer from "react-msa-viewer";
 import Viewer from "../viewer/Viewer";
 
 
 export class InformacionSobreLaSecuencia extends React.Component {
     constructor(props) {
-        debugger
+        
         super(props);
         this.state = {
             opcionSeleccionada: 1,
@@ -41,6 +41,8 @@ export class InformacionSobreLaSecuencia extends React.Component {
                     {this.state.opcionSeleccionada === 2 && <MSAViewer sequences={this.props.dssps}/>}
                     {this.state.opcionSeleccionada === 3 && <Viewer protein={this.props.codigoPdb}> </Viewer>}
                 </div>
+              
+
             </div>
         )
     }
