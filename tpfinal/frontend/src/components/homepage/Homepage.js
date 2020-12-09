@@ -19,8 +19,8 @@ export class Homepage extends React.Component {
             dssps: [],
             sequence: [],
             loading: false,
-            evalue: null,
-            coverage: null,
+            evalue: 0.001,
+            coverage: 90,
         }
     }
 
@@ -44,7 +44,7 @@ export class Homepage extends React.Component {
         
         this.setState({loading: true, mostrarSeleccionSecuencias: false})
         
-        SequenceService().conseguirTodaLaInfo(secuencia).then((response) => {
+        SequenceService().conseguirTodaLaInfo(secuencia, this.state.evalue, this.state.coverage).then((response) => {
 
             const dssps = response.data.map(info => {
                 return   {
@@ -100,17 +100,17 @@ export class Homepage extends React.Component {
                 {this.state.mostrarSeleccionSecuencias &&  <div>
                     <label>Parametros Blast</label>
                     <br/>
-                    <label>Evalue:</label>
+                    <label>E-value:</label>
                     <input type='text'
                            className={'evalue'}
                            value={this.state.evalue}
-                           defaultValue={0.001}
+                           defaultValue={this.state.evalue}
                            onChange={(event) => this.setState({evalue: event.target.value})}/>
                     <label>Coverage:</label>
                     <input type='text'
                            className={'coverage'}
                            value={this.state.coverage}
-                           defaultValue={90}
+                           defaultValue={this.state.coverage}
                            onChange={(event) => this.setState({coverage: event.target.value})}/>
                 </div> }
                 {this.state.loading && <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}

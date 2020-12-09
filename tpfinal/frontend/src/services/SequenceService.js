@@ -10,10 +10,12 @@ const SequenceService = () => {
             })
     }
 
-    const conseguirTodaLaInfo = (secuencia) => {
+    const conseguirTodaLaInfo = (secuencia, evalue, coverage) => {
         return axios.post(`${SERVICE_URL}analyze`,
             {
-                sequence: secuencia 
+                sequence: secuencia,
+                evalue: evalue,
+                coverage: coverage 
             })
     }
 

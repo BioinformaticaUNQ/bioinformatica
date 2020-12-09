@@ -13,8 +13,8 @@ import json
 app = Flask(__name__)
 CORS(app, suppport_credentials=True)
 
-clustal_runner = LinuxClustalRunner()
-#clustal_runner = WindowsClustalRunner()
+#clustal_runner = LinuxClustalRunner()
+clustal_runner = WindowsClustalRunner()
 
 pdb_service = PDBService()
 blast_service = BlastService()
@@ -46,8 +46,9 @@ def homologous_sequences():
 @cross_origin(support_credentials=True)
 def analyze():
     sequence = request.json['sequence']
-    covarage = int(request.json['coverage'])
-    sequences = blast_service.blast_records(sequence, expected_coverage=covarage)
+    coverage = int(request.json['coverage'])
+    evalue = float(request.json['evalue'])
+    sequences = blast_service.blast_records(sequence, expected_coverage=coverage, evalue=evalue)
 
     primary_structure = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '').replace('Chain', '')
