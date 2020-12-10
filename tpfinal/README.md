@@ -22,3 +22,10 @@ Podremos acceder a las distintas visualizaciones desde la botonera principal.
  - Ver estructuras secundarias 
  - Ver estructura terciaria
 
+
+
+### Autores
+ - Alvarenga, Marcos
+ - Amat, Belen 
+ - Avalos, Lucas
+ - Britez, Fabrizio
