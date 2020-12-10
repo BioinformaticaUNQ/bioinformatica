@@ -22,6 +22,7 @@ export class Homepage extends React.Component {
             loading: false,
             evalue: 0.001,
             coverage: 90,
+            secuenciaElegida: null
         }
     }
 
@@ -42,15 +43,15 @@ export class Homepage extends React.Component {
     }
 
     conseguirTodaLaInfo = (secuencia) => {
-        
-        this.setState({loading: true, mostrarSeleccionSecuencias: false})
+        debugger
+        this.setState({loading: true, mostrarSeleccionSecuencias: false, secuenciaElegida: secuencia})
         
         SequenceService().conseguirTodaLaInfo(secuencia, this.state.evalue, this.state.coverage).then((response) => {
 
             const dssps = response.data.map(info => {
                 return   {
                     name: info['sequence']['pdbcode'],
-                    sequence: info['dssp']
+                    sequence: info['dssp']['alignment']
                     }
             })
     
@@ -149,7 +150,7 @@ export class Homepage extends React.Component {
                     
                 </div> }
                 {this.state.loading && <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}
-                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia codigoPdb={this.state.pdbCode}
+                {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia sequence={this.state.secuenciaElegida}codigoPdb={this.state.pdbCode}
                 sequences={this.state.sequences} dssps={this.state.dssps}/>}
 
             </div>
