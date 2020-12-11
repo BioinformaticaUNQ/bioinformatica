@@ -17,7 +17,7 @@ const Viewer = ({protein}) => {
     return (
         <div>
             <center>
-                <div id="viewport" ref={ref} style={{ width: '700px', height: '700px' }} />
+                <div id="viewport" ref={ref} style={{ width: '600px', height: '600px' }} />
             </center>
         </div>
     )

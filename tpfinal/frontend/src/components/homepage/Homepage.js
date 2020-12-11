@@ -22,16 +22,27 @@ export class Homepage extends React.Component {
             loading: false,
             evalue: 0.001,
             coverage: 90,
-            secuenciaElegida: null
+            secuenciaElegida: null,
+            errorPDBCode: false,
         }
     }
 
+    componentWillMount(){
+        document.body.style.backgroundColor = "#fcf8ec";
+    }
 
     getSequences = () => {
         if(this.esPdbValido()) {
             SequenceService().getSequence(this.state.pdbCode)
                 .then((response) => {
-                    this.setState({mostrarSeleccionSecuencias: true, secuenciasParaElegir: response.data})
+                    const sequences = response.data.length
+                    if (sequences) {
+                        this.setState({mostrarSeleccionSecuencias: true, secuenciasParaElegir: response.data, errorPDBCode: false})
+                    }
+                    else {
+                        this.setState({errorPDBCode: true})
+                    }
+                    
                 })
         }
     }
@@ -43,7 +54,6 @@ export class Homepage extends React.Component {
     }
 
     conseguirTodaLaInfo = (secuencia) => {
-        debugger
         this.setState({loading: true, mostrarSeleccionSecuencias: false, secuenciaElegida: secuencia})
         
         SequenceService().conseguirTodaLaInfo(secuencia, this.state.evalue, this.state.coverage).then((response) => {
@@ -65,8 +75,8 @@ export class Homepage extends React.Component {
             this.setState({mostrarInformacionAnalizada: true, 
                 dssps: dssps, sequences: sequences, loading: false})
 
-        }).catch(() => {
-            console.log("Esto es una mierda")
+        }).catch((err) => {
+            console.log(err)
         })
     }
 
@@ -152,7 +162,11 @@ export class Homepage extends React.Component {
                 {this.state.loading && <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}
                 {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia sequence={this.state.secuenciaElegida}codigoPdb={this.state.pdbCode}
                 sequences={this.state.sequences} dssps={this.state.dssps}/>}
-
+                {this.state.errorPDBCode && 
+                    <div className='pdb-id-error'>
+                        <span>No tenemos registrado ese PDB code en nuestra base de datos, lo sentimos!</span>
+                    </div>
+                }
             </div>
         )
     }
