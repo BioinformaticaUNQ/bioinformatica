@@ -69,14 +69,15 @@ class BlastService:
         for record in records:
             for alignment in record.alignments:
                 if self.is_identity_and_coverage_valid(alignment, query_len, coverage_expected) :
-                    results.append({
-                        'title': alignment.title.split('>')[0],
-                        'sequence': PDBService.get_sequence(alignment.hit_id.split('|')[1], alignment.hit_id.split('|')[2])
-                    })
+                    try:
+                        results.append({
+                            'title': alignment.title.split('>')[0],
+                            'sequence': PDBService.get_sequence(alignment.hit_id.split('|')[1], alignment.hit_id.split('|')[2])
+                        })
+                    except:
+                        print('secuencia ignorada por error en pbdserivce.')
                 else:
                     print(alignment.hit_id.split('|')[1], 'filtered')
-
-        return results
 
     def is_identity_and_coverage_valid(self, alignment, query_len, coverage_expected):
 
