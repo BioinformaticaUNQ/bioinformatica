@@ -14,6 +14,23 @@
     width: 35%;
   }
 
+  .parametros{
+    padding: 1%;
+    width: 75%;
+
+    .elementos-parametros {
+      display: flex;
+      justify-content: center;
+    
+      .columna-parametros {
+        padding: 1%;
+
+      }
+    }
+
+
+  }
+
   .codigo-pdb {
     padding-bottom: 20px;
 

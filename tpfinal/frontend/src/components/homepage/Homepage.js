@@ -104,45 +104,57 @@ export class Homepage extends React.Component {
                     </div>
                     }
                 </div>
-
-                <SeleccionSecuencia mostrarSeleccionSecuencias={this.state.mostrarSeleccionSecuencias}
-                                    secuenciasParaElegir={this.state.secuenciasParaElegir}
-                onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
-
                 {this.state.mostrarSeleccionSecuencias &&  
-                <div>
+                <div className="parametros">
                     
                     <label>Parametros Blast</label>
                     <br/>
+                    
+                    <div className="elementos-parametros">
+                        <div className="columna-parametros">
+                            <div className="elemento-parametro ">
+                                <label>E-value:</label>
+                                <input type='text'
+                                    className={'evalue'}
+                                    value={this.state.evalue}
+                                    defaultValue={this.state.evalue}
+                                    onChange={(event) => this.setState({evalue: event.target.value})}/>
+                            </div>
 
-                    <label>E-value:</label>
-                    <input type='text'
-                           className={'evalue'}
-                           value={this.state.evalue}
-                           defaultValue={this.state.evalue}
-                           onChange={(event) => this.setState({evalue: event.target.value})}/>
-                    
-                    <label>Coverage:</label>
-                    <input type='text'
-                           className={'coverage'}
-                           value={this.state.coverage}
-                           defaultValue={this.state.coverage}
-                           onChange={(event) => this.setState({coverage: event.target.value})}/>
+                            <div className="elemento-parametro ">
+                                <label>Gap open:</label>
+                                <input type='number'
+                                    value="11"
+                                    defaultValue="11"
+                                    disabled={true}/>
+                            
+                            </div>
+                          
+                        </div>
+                        
+                        <div className="columna-parametros">
 
-                    <br/>
-                    
-                    <label>Gap open:</label>
-                    <input type='number'
-                           value="11"
-                           defaultValue="11"
-                           disabled={true}/>
-                    
-                    <label>Gap extend:</label>
-                    <input type='number'
-                           value='1'
-                           defaultValue='1'
-                           disabled={true}/>
-                    
+                            <div className="elemento-parametro ">
+                                <label>Coverage:</label>
+                                <input type='text'
+                                    className={'coverage'}
+                                    value={this.state.coverage}
+                                    defaultValue={this.state.coverage}
+                                    onChange={(event) => this.setState({coverage: event.target.value})}/>
+
+                            </div>
+                            
+
+                            <div className="elemento-parametro ">
+                                <label>Gap extend:</label>
+                                <input type='number'
+                                    value='1'
+                                    defaultValue='1'
+                                    disabled={true}/>
+
+                            </div>
+                        </div>
+                    </div>    
                     <br />
 
                     <label>matrix:</label>
@@ -159,6 +171,12 @@ export class Homepage extends React.Component {
 
                     
                 </div> }
+
+                <SeleccionSecuencia mostrarSeleccionSecuencias={this.state.mostrarSeleccionSecuencias}
+                                    secuenciasParaElegir={this.state.secuenciasParaElegir}
+                onSecuenciaSeleccionada={this.conseguirTodaLaInfo}/>
+
+                
                 {this.state.loading && <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}
                 {this.state.mostrarInformacionAnalizada && <InformacionSobreLaSecuencia sequence={this.state.secuenciaElegida}codigoPdb={this.state.pdbCode}
                 sequences={this.state.sequences} dssps={this.state.dssps}/>}
