@@ -15,8 +15,8 @@ import json
 app = Flask(__name__)
 CORS(app, suppport_credentials=True)
 
-#clustal_runner = LinuxClustalRunner()
-clustal_runner = WindowsClustalRunner()
+clustal_runner = LinuxClustalRunner()
+#clustal_runner = WindowsClustalRunner()
 
 pdb_service = PDBService()
 blast_service = BlastService()

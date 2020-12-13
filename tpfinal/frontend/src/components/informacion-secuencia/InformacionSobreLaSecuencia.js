@@ -5,7 +5,14 @@ import Viewer from "../viewer/Viewer";
 import { Card, Accordion , Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+const  download = (data, filename) => {
+    const element = document.createElement("a");
+    const file = new Blob([data], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = filename;
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+}
 export class InformacionSobreLaSecuencia extends React.Component {
     constructor(props) {
         
@@ -15,7 +22,18 @@ export class InformacionSobreLaSecuencia extends React.Component {
         }
     }
 
-   
+    downloadPrimaryStructure(){
+        download(JSON.stringify(this.props.sequences), 'primary_structures.json')
+    }
+
+    downloadSecondaryStructure(){
+        download(JSON.stringify(this.props.dssps), 'secondary_structures.json')
+    }
+
+    downloadPymolAnalyze(){
+        const data = []
+        download(JSON.stringify(data), 'thirty_structures.json')
+    }
 
     render() {
         return(
@@ -56,9 +74,22 @@ export class InformacionSobreLaSecuencia extends React.Component {
                 </div>
 
                 <div className='contenido'>
-                    {this.state.opcionSeleccionada === 1 && <MSAViewer sequences={this.props.sequences}/>}
-                    {this.state.opcionSeleccionada === 2 && <MSAViewer sequences={this.props.dssps}/>}
-                    {this.state.opcionSeleccionada === 3 && <Viewer protein={this.props.codigoPdb}> </Viewer>}
+                    {this.state.opcionSeleccionada === 1 &&
+                        <div>
+                            <MSAViewer sequences={this.props.sequences}/>
+                            <Button onClick={()=>this.downloadPrimaryStructure()}> Descargar data</Button>
+                        </div>}
+                    {this.state.opcionSeleccionada === 2 &&
+                        <div>
+                            <MSAViewer sequences={this.props.dssps}/>
+                            <Button onClick={()=>this.downloadSecondaryStructure()}> Descargar data</Button>
+                        </div>}
+                    {this.state.opcionSeleccionada === 3 &&
+                        <div>
+                            <Viewer protein={this.props.codigoPdb}> </Viewer>
+                            <Button onClick={()=>this.downloadPymolAnalyze()}> Descargar analisis pymol</Button>
+                        </div>
+                        }
                 </div>
               
 

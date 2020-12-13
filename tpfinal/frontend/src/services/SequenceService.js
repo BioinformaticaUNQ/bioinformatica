@@ -24,6 +24,8 @@ const SequenceService = () => {
         getSequence: getSequence,
         conseguirTodaLaInfo: conseguirTodaLaInfo
     }
+
+    
 }
 
 export default SequenceService;
