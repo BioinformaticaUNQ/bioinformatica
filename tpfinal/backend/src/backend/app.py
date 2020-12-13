@@ -2,11 +2,13 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 
+
 from src.backend.environment_strategies.environment_strategy import LinuxClustalRunner, WindowsClustalRunner
 from src.backend.service.clustal_service import ClustalService
 from src.backend.service.blast_service import BlastService
 from src.backend.service.dssp_service import DSSPService
 from src.backend.service.pdb_service import PDBService
+from src.backend.service.align_service import AlignService
 import json
 
 
@@ -20,6 +22,7 @@ pdb_service = PDBService()
 blast_service = BlastService()
 clustal_service = ClustalService(clustal_runner)
 dssp_service = DSSPService()
+align_service = AlignService()
 
 
 @app.route('/sequences', methods=['POST'])
@@ -53,6 +56,18 @@ def analyze():
     primary_structure = clustal_service.get_alignment_from(sequences)
     chains = sequence.split('|')[1].replace('Chains', '').replace('Chain', '')
     result = dssp_service.get_alignment_from(primary_structure, chains)
+
+    return json.dumps(result)
+
+
+@app.route('/alignStructures', methods=['POST'])
+@cross_origin(support_credentials=True)
+def align_structures():
+    mobile = request.json['mobile']
+    reference = request.json['reference']
+
+    result = align_service.get_alignment(mobile.lower(), "A",
+                                         reference.lower(), "A")
 
     return json.dumps(result)
 

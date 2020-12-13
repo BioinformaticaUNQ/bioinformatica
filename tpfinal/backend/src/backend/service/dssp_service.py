@@ -17,7 +17,7 @@ class DSSPService:
         pdbcode = sequence.get('pdbcode').lower()
         self._generate_pdb(pdbcode)
         secondary_structure, data_structure = self._run(pdbcode, sequence.get('chains'))
-        return { 'alignment' : self._align(secondary_structure, sequence.get('sequence')) , 'chain_start': data_structure[0], 'chain_end': data_structure[1]}
+        return {'alignment': self._align(secondary_structure, sequence.get('sequence')), 'chain_start': data_structure[0], 'chain_end': data_structure[1]}
 
     def _align(self, secondary_structure, alignmed_primary_structure):
 
@@ -40,4 +40,5 @@ class DSSPService:
         model = structure[0]
         dssp = DSSP(model, pdb_file, dssp=dssp_route)
         valid_keys = [key for key in dssp.keys() if key[0] in chains]
+
         return ([ dssp[key] for key in valid_keys], (valid_keys[:1], valid_keys[-1:]))

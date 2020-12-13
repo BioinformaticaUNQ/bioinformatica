@@ -79,9 +79,10 @@ class BlastService:
                 else:
                     print(alignment.hit_id.split('|')[1], 'filtered')
 
+        return results
+
     def is_identity_and_coverage_valid(self, alignment, query_len, coverage_expected):
 
-        # seq.alignments[1].hsps[0]
         hsps_of_sequence = alignment.hsps[0]
         identity = hsps_of_sequence.identities
         query_to = hsps_of_sequence.query_end
