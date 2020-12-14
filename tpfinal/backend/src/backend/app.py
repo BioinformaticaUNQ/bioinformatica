@@ -15,8 +15,8 @@ import json
 app = Flask(__name__)
 CORS(app, suppport_credentials=True)
 
-clustal_runner = LinuxClustalRunner()
-#clustal_runner = WindowsClustalRunner()
+#clustal_runner = LinuxClustalRunner()
+clustal_runner = WindowsClustalRunner()
 
 pdb_service = PDBService()
 blast_service = BlastService()
@@ -64,10 +64,15 @@ def analyze():
 @cross_origin(support_credentials=True)
 def align_structures():
     mobile = request.json['mobile']
-    reference = request.json['reference']
+    mobile_protein = mobile["name"]
+    mobile_chain = mobile["chain"]
 
-    result = align_service.get_alignment(mobile.lower(), "A",
-                                         reference.lower(), "A")
+    references = request.json['reference']
+
+    references = [(pdb.split(",")[0].lower(), pdb.split(",")[1]) for pdb in references]
+
+    result = align_service.get_alignments(mobile_protein.lower(), mobile_chain,
+                                         references)
 
     return json.dumps(result)
 

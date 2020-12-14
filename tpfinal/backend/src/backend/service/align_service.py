@@ -12,6 +12,13 @@ import os
 
 class AlignService:
 
+    def get_alignments(self, mobile_, mobile_chain,  references):
+        result = []
+        for reference in references:
+            result.append({"result":self.get_alignment(mobile_, mobile_chain, reference[0], reference[1]),
+                           "name": mobile_+"-"+reference[0]})
+        return result
+
     def get_alignment(self, mobile_, mobile_chain,  reference_, reference_chain):
 
         base = os.getcwd()
@@ -58,6 +65,7 @@ class AlignService:
 
         with open(file, "r+") as file_:
             string_result = file_.read()
+        #os.remove(file)
 
         return string_result
 
