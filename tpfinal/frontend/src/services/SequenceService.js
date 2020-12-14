@@ -19,10 +19,20 @@ const SequenceService = () => {
             })
     }
 
+    const analisisPymol = (mobile, reference) => {
+        return axios.post(`${SERVICE_URL}alignStructures`,
+            {
+                mobile: mobile,
+                reference: reference    
+            })
+        }
+
+
 
     return {
         getSequence: getSequence,
-        conseguirTodaLaInfo: conseguirTodaLaInfo
+        conseguirTodaLaInfo: conseguirTodaLaInfo,
+        analisisPymol: analisisPymol
     }
 
     

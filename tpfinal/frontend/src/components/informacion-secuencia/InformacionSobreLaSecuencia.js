@@ -2,8 +2,10 @@ import React from "react";
 import "./informacion-secuencia.scss"
 import MSAViewer from "react-msa-viewer";
 import Viewer from "../viewer/Viewer";
-import { Card, Accordion , Button } from 'react-bootstrap';
+import { Card, Accordion , Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
+import SequenceService from "../../services/SequenceService";
 
 const  download = (data, filename) => {
     const element = document.createElement("a");
@@ -19,6 +21,9 @@ export class InformacionSobreLaSecuencia extends React.Component {
         super(props);
         this.state = {
             opcionSeleccionada: 1,
+            analisisPymol: [],
+            data: [],
+            loading: false
         }
     }
 
@@ -31,8 +36,17 @@ export class InformacionSobreLaSecuencia extends React.Component {
     }
 
     downloadPymolAnalyze(){
-        const data = []
-        download(JSON.stringify(data), 'thirty_structures.json')
+
+        this.setState({loading: true})
+        
+        SequenceService().analisisPymol(this.props.pbsAndChain.find((seq) => seq.name.toUpperCase() == this.props.codigoPdb.toUpperCase()), 
+        this.state.analisisPymol).then((response) => {
+            this.setState({loading: false})
+            response.data.forEach((element) => {
+                
+             download(element.result, element.name+'.json')
+        } )})
+        
     }
 
     render() {
@@ -77,17 +91,29 @@ export class InformacionSobreLaSecuencia extends React.Component {
                     {this.state.opcionSeleccionada === 1 &&
                         <div>
                             <MSAViewer sequences={this.props.sequences}/>
-                            <Button onClick={()=>this.downloadPrimaryStructure()}> Descargar data</Button>
+                            <Button className="mt-2" variant="success" onClick={()=>this.downloadPrimaryStructure()}> Descargar json</Button>
                         </div>}
                     {this.state.opcionSeleccionada === 2 &&
                         <div>
                             <MSAViewer sequences={this.props.dssps}/>
-                            <Button onClick={()=>this.downloadSecondaryStructure()}> Descargar data</Button>
+                            <Button className="mt-2" variant="success"  onClick={()=>this.downloadSecondaryStructure()}> Descargar json</Button>
                         </div>}
                     {this.state.opcionSeleccionada === 3 &&
                         <div>
                             <Viewer protein={this.props.codigoPdb}> </Viewer>
-                            <Button onClick={()=>this.downloadPymolAnalyze()}> Descargar analisis pymol</Button>
+                            <DropdownMultiselect style={{paddingTop: "3%"}}
+                                options={this.props.pbsAndChain.filter((seq) => this.props.codigoPdb.toUpperCase() !== seq.name.toUpperCase()).map((seq) => {
+                                    return {key: [seq.name, seq.chain], label: seq.name}  
+                                    })
+                                }
+                                name="countries"
+                                placeholder="Seleccionar PDBs"
+                                handleOnChange={(selected) => {
+                                    this.setState({analisisPymol: selected})
+                                }}
+                            />
+                            {!this.state.loading && <Button disabled={this.state.analisisPymol.length == 0} className="mt-3 h-25" variant="success"   onClick={()=>this.downloadPymolAnalyze()}> Descargar analisis pymol</Button>}
+                            {this.state.loading && <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}
                         </div>
                         }
                 </div>
