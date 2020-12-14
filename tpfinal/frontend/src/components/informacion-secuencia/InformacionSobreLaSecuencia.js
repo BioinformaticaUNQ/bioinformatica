@@ -112,7 +112,7 @@ export class InformacionSobreLaSecuencia extends React.Component {
                                     this.setState({analisisPymol: selected})
                                 }}
                             />
-                            {!this.state.loading && <Button disabled={this.state.analisisPymol.length == 0} className="mt-3 h-25" variant="success"   onClick={()=>this.downloadPymolAnalyze()}> Descargar analisis pymol</Button>}
+                            {!this.state.loading && <Button disabled={this.state.analisisPymol.length == 0} className="mt-3 h-25" variant="success"   onClick={()=>this.downloadPymolAnalyze()}> Descargar analisis de estructura terciaria</Button>}
                             {this.state.loading && <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}
                         </div>
                         }
